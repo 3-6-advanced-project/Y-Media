@@ -1,5 +1,18 @@
 <resources>
     <string name="app_name">YoutubeAPI</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="tab_home_text">Home</string>
+    <string name="tab_search_text">Search</string>
+    <string name="tab_my_video_text">MyVideo</string>
+
+    <string name="home_fragment_most_popular_videos_text">Most Popular Videos</string>
+    <string name="home_fragment_category_videos_text">Category Videos</string>
+    <string name="home_fragment_category_channels_text">Category Channels</string>
+
+    <string name="search_fragment_search_results_text">Search Results</string>
+    <string name="search_fragment_search_edit_text_hint">Search</string>
+
+    <string name="my_video_fragment_like_text">Likes</string>
+
 </resources>

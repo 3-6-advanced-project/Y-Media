@@ -4,9 +4,10 @@ import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
+
 @Entity
 data class VideoEntity(
-    @PrimaryKey val rowId: Long,
+    @PrimaryKey(autoGenerate = true) val rowId: Long,
     val kind: String,
     val etag: String,
     val videoId: String,

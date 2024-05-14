@@ -24,8 +24,8 @@ class MainActivity : AppCompatActivity() {
     private fun initView() {
 
         with(binding) {
-            viewPager.adapter = ViewPagerAdapter(this@MainActivity)
-            TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+            vp.adapter = ViewPagerAdapter(this@MainActivity)
+            TabLayoutMediator(tl, vp) { tab, position ->
                 when(position) {
                     0 -> {
                         tab.setIcon(R.drawable.baseline_home_black_24dp)
