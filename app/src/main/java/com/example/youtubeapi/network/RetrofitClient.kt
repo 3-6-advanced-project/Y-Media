@@ -8,7 +8,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitClient {
 
-    private const val BASE_URL = "https://www.googleapis.com/"
     private val loggingInterceptor = HttpLoggingInterceptor().apply {
         setLevel(HttpLoggingInterceptor.Level.BASIC)
     }
@@ -20,7 +19,6 @@ object RetrofitClient {
     }
     private val retrofit by lazy {
         Retrofit.Builder()
-            .baseUrl(BASE_URL)
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
