@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <!--
+    almost_black = 각 Fragment 배경색
+    dark_grey = TabLayout 배경색
+    white = 제목, 선택된 탭 이름 등
+    grey = 영상 게시자 이름 (영상 섬네일 아래 채널명)
+    whitish_grey = 미선택 탭 이름
+    -->
+    <color name = "almost_black">#282828</color>
+    <color name = "dark_grey">#3F3F3F</color>
+    <color name = "white">#FFFFFF</color>
+    <color name = "grey">#979797</color>
+    <color name = "whitish_grey">#858585</color>
 </resources>

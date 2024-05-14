@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.youtubeapi.HomeFragment_TAG
 import com.example.youtubeapi.MyVideoFragment_TAG
+import com.example.youtubeapi.R
 import com.example.youtubeapi.SearchFragment_TAG
 import com.example.youtubeapi.adapter.ViewPagerAdapter
 import com.example.youtubeapi.databinding.ActivityMainBinding
@@ -23,10 +24,13 @@ class MainActivity : AppCompatActivity() {
     private fun initView() {
 
         with(binding) {
-            viewPager.adapter = ViewPagerAdapter(this@MainActivity)
-            TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+            vp.adapter = ViewPagerAdapter(this@MainActivity)
+            TabLayoutMediator(tl, vp) { tab, position ->
                 when(position) {
-                    0 -> tab.text = HomeFragment_TAG
+                    0 -> {
+                        tab.setIcon(R.drawable.baseline_home_black_24dp)
+                        tab.text = HomeFragment_TAG
+                    }
                     1 -> tab.text = SearchFragment_TAG
                     2 -> tab.text = MyVideoFragment_TAG
                 }
