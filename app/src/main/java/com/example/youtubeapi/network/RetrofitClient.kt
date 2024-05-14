@@ -2,13 +2,20 @@ package com.example.youtubeapi.network
 
 import com.example.youtubeapi.data.remote.RemoteDataSource
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitClient {
-    private const val BASE_URL = "" // youtube api
+
+    private const val BASE_URL = "https://www.googleapis.com/"
+    private val loggingInterceptor = HttpLoggingInterceptor().apply {
+        setLevel(HttpLoggingInterceptor.Level.BASIC)
+    }
+
     private val okHttpClient by lazy {
         OkHttpClient.Builder()
+            .addInterceptor(loggingInterceptor)
             .build()
     }
     private val retrofit by lazy {
