@@ -1,8 +1,16 @@
+import java.io.FileInputStream
+import java.util.Properties
+
+val properties = Properties().apply {
+    load(FileInputStream(rootProject.file("local.properties")))
+}
+
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     id("kotlin-kapt")
 }
+
 
 android {
     namespace = "com.example.youtubeapi"
@@ -16,6 +24,10 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField("String", "GOOGLE_API_URL_BASE", properties.getProperty("GOOGLE_API_URL_BASE"))
+        buildConfigField("String", "GOOGLE_API_URL_DEVELOP", properties.getProperty("GOOGLE_API_URL_DEVELOP"))
+        buildConfigField("String", "GOOGLE_API_KEY", properties.getProperty("GOOGLE_API_KEY"))
     }
 
     buildTypes {
@@ -37,6 +49,7 @@ android {
 
     buildFeatures {
         viewBinding = true
+        buildConfig = true
     }
 }
 
