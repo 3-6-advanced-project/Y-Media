@@ -28,11 +28,17 @@ class MainActivity : AppCompatActivity() {
             TabLayoutMediator(tl, vp) { tab, position ->
                 when(position) {
                     0 -> {
-                        tab.setIcon(R.drawable.baseline_home_black_24dp)
+                        tab.setIcon(R.drawable.ic_home_outline)
                         tab.text = HomeFragment_TAG
                     }
-                    1 -> tab.text = SearchFragment_TAG
-                    2 -> tab.text = MyVideoFragment_TAG
+                    1 -> {
+                        tab.setIcon(R.drawable.ic_search_outline)
+                        tab.text = SearchFragment_TAG
+                    }
+                    2 -> {
+                        tab.setIcon(R.drawable.ic_likes_outline)
+                        tab.text = MyVideoFragment_TAG
+                    }
                 }
             }.attach()
         }
