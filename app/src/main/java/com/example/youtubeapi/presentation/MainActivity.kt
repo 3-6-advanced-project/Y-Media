@@ -2,6 +2,7 @@ package com.example.youtubeapi.presentation
 
 import android.content.res.ColorStateList
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.youtubeapi.HomeFragment_TAG
@@ -38,7 +39,6 @@ class MainActivity : AppCompatActivity() {
                     1 -> {
                         tab.setIcon(R.drawable.ic_search_outline)
                         tab.text = SearchFragment_TAG
-                        tab.icon?.clearColorFilter()
                     }
                     2 -> {
                         tab.setIcon(R.drawable.ic_likes_outline)
