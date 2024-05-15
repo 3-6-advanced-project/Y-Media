@@ -49,16 +49,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun clickedView() { //선택된 탭.
-        //코드가 왠지 불필요하게 길어졌다. 다음부턴 bottom navigation을 공부해야겠다.
-
-        val white = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.white))
-        val grey = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.whitish_grey))
-        /* 여기서 context 왜 지정해야 하는지 아시는 분?
-        이전 getColor가 deprecated된 건 읽었는데, 컬러 코드 하나 가져오는데 왜 context까지 필요한지 이해가 안돼요 */
-
+    private fun clickedView() { //탭 선택시
         binding.tl.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
+                val white = ColorStateList.valueOf(ContextCompat.getColor(applicationContext, R.color.white))
                 when(tab?.position){
                     0 -> {
                         tab.setIcon(R.drawable.ic_home)
