@@ -52,7 +52,6 @@ class MainActivity : AppCompatActivity() {
     private fun clickedView() { //탭 선택시
         binding.tl.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
-                val white = ColorStateList.valueOf(ContextCompat.getColor(applicationContext, R.color.white))
                 when(tab?.position){
                     0 -> {
                         tab.setIcon(R.drawable.ic_home)
