@@ -17,4 +17,5 @@ class VideoRepository(
         maxWidth = maxWidth,
         videoCategoryId = videoCategoryId
     )
+    suspend fun getVideoCategories() = googleApiDataSource.getVideoCategories()
 }
