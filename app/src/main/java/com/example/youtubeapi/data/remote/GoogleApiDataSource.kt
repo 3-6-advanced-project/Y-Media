@@ -1,11 +1,11 @@
 package com.example.youtubeapi.data.remote
 
 import com.example.youtubeapi.BuildConfig
-import com.example.youtubeapi.data.model.VideoResponse
+import com.example.youtubeapi.data.model.dto.VideoResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-interface RemoteDataSource {
+interface GoogleApiDataSource {
 
     @GET("youtube/v3/videos")
     suspend fun getMostPopularVideo(
@@ -16,5 +16,6 @@ interface RemoteDataSource {
         @Query("maxResults") maxResults: Int,
         @Query("maxWidth") maxWidth: Int,
         @Query("regionCode") regionCode: String = "KR",
+        @Query("videoCategoryId") videoCategoryId: String,
     ): VideoResponse
 }
