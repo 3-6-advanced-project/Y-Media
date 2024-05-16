@@ -7,7 +7,7 @@ import androidx.room.Query
 import com.example.youtubeapi.data.model.entity.VideoEntity
 
 @Dao
-interface VideoDao {
+interface VideoEntityDao {
     @Query("SELECT * FROM VideoEntity")
     fun getAllVideoEntity(): List<VideoEntity>
     @Delete
