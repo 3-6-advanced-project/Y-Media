@@ -1,6 +1,9 @@
 package com.example.youtubeapi.network
 
+import com.example.youtubeapi.GOOGLE_API_URL_BASE
+import com.example.youtubeapi.GOOGLE_API_URL_DEVELOP
 import com.example.youtubeapi.data.remote.RemoteDataSource
+import com.example.youtubeapi.data.remote.SearchDataSource
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -17,14 +20,21 @@ object RetrofitClient {
             .addInterceptor(loggingInterceptor)
             .build()
     }
-    private val retrofit by lazy {
-        Retrofit.Builder()
+
+    fun buildRetrofit(baseUrl: String): Retrofit {
+        return Retrofit.Builder()
+            .baseUrl(baseUrl)
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
-    val search: RemoteDataSource by lazy {
-        retrofit.create(RemoteDataSource::class.java)
+
+    val base: SearchDataSource by lazy {
+        buildRetrofit(GOOGLE_API_URL_BASE).create(SearchDataSource::class.java)
+    }
+
+    val develop: RemoteDataSource by lazy {
+        buildRetrofit(GOOGLE_API_URL_DEVELOP).create(RemoteDataSource::class.java)
     }
 }
 

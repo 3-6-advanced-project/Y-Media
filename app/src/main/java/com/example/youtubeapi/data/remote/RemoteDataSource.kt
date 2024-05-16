@@ -1,6 +1,7 @@
 package com.example.youtubeapi.data.remote
 
 import com.example.youtubeapi.BuildConfig
+import com.example.youtubeapi.GOOGLE_API_URL_BASE
 import com.example.youtubeapi.GOOGLE_API_URL_DEVELOP
 import com.example.youtubeapi.data.model.VideoResponse
 import retrofit2.http.GET
