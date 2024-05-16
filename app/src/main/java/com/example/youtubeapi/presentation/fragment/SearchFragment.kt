@@ -44,45 +44,51 @@ class SearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.etSearchKeyword.setOnEditorActionListener { v, actionId, event ->
+        initEditTextDoneActionListener()
+        initRecyclerView()
+        initViewModel()
+    }
+
+    private fun initEditTextDoneActionListener() = with(binding) {
+        etSearchKeyword.setOnEditorActionListener { v, actionId, event ->
             var handled = false
+
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 // 키보드 내리기
                 val imm = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.hideSoftInputFromWindow(requireActivity().window.decorView.applicationWindowToken, 0)
 
-                viewModel.onSearch(binding.etSearchKeyword.text.toString())
+                viewModel.onSearch(etSearchKeyword.text.toString())
                 handled = true
             }
+
             handled
-        }
-
-        with(binding.rvSearch) {
-            adapter = searchListAdapter
-            layoutManager = LinearLayoutManager(requireContext())
-
-            addItemDecoration(
-                ListItemDecoration(resources.displayMetrics.density).apply {
-                    setPaddingValues(bottomDp = 16)
-                }
-            )
-        }
-
-        lifecycleScope.launch {
-            viewModel.uiState.collect { uiState ->
-                when (uiState) {
-                    is LatestNewsUiState.Success -> {
-                        val videoStates = uiState.videoStates
-                        searchListAdapter.submitList(videoStates.toMutableList())
-                    }
-                    is LatestNewsUiState.Error -> initRVItem()
-                }
-            }
         }
     }
 
-    private fun setItems(uiState: LatestNewsUiState.Success) {
 
+    private fun initRecyclerView() = with(binding.rvSearch) {
+        adapter = searchListAdapter
+        layoutManager = LinearLayoutManager(requireContext())
+
+        addItemDecoration(
+            ListItemDecoration(resources.displayMetrics.density).apply {
+                setPaddingValues(bottomDp = 16)
+            }
+        )
+    }
+
+
+    private fun initViewModel() = lifecycleScope.launch {
+        viewModel.uiState.collect { uiState ->
+            when (uiState) {
+                is LatestNewsUiState.Success -> {
+                    val videoStates = uiState.videoStates
+                    searchListAdapter.submitList(videoStates.toMutableList())
+                }
+                is LatestNewsUiState.Error -> initRVItem()
+            }
+        }
     }
 
     private fun initRVItem() = with(binding) {
