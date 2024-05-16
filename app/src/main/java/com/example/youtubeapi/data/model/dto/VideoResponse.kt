@@ -1,12 +1,12 @@
 package com.example.youtubeapi.data.model.dto
 
-data class VideoResponse(
+data class VideoResponse<T>(
     val kind: String,
     val etag: String,
     val nextPageToken: String,
     val regionCode: String,
     val pageInfo: PageInfo,
-    val items: List<Video>,
+    val items: List<T>,
 )
 
 data class PageInfo(
