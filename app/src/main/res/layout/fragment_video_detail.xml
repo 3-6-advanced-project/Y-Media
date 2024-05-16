@@ -3,12 +3,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.fragment.VideoDetailFragment">
+    tools:context=".presentation.fragment.VideoDetailFragment"
+    android:background="@color/almost_black">
+
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ImageView
+        android:id="@+id/btn_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/default_horizontal_margin12"
+        android:src="@drawable/ic_back"/>
+    <ImageView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:src="@drawable/img_test"
+        android:layout_margin="@dimen/default_horizontal_margin8"/>
+    <TextView
+        android:id="@+id/tv_video_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxLines="2"
+        android:text="Video Title Here"
+        android:textColor="@color/white"
+        android:textSize="28dp"
+        android:textStyle="bold"/>
+
 
 </FrameLayout>
