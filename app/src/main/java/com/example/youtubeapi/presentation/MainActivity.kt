@@ -18,29 +18,29 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        initView()
+//        initView()
     }
 
-    private fun initView() {
-
-        with(binding) {
-            vp.adapter = ViewPagerAdapter(this@MainActivity)
-            TabLayoutMediator(tl, vp) { tab, position ->
-                when(position) {
-                    0 -> {
-                        tab.setIcon(R.drawable.selector_home) //초기 화면. 그런데 이렇게 코드를 짰을 때 문제는 다른 탭/뷰페이저가 지정된 상태에서 앱이 시작했을 때다.
-                        tab.text = HomeFragment_TAG
-                    }
-                    1 -> {
-                        tab.setIcon(R.drawable.selector_likes)
-                        tab.text = SearchFragment_TAG
-                    }
-                    2 -> {
-                        tab.setIcon(R.drawable.selector_search)
-                        tab.text = MyVideoFragment_TAG
-                    }
-                }
-            }.attach()
-        }
-    }
+//    private fun initView() {
+//
+//        with(binding) {
+//            vp.adapter = ViewPagerAdapter(this@MainActivity)
+//            TabLayoutMediator(tl, vp) { tab, position ->
+//                when(position) {
+//                    0 -> {
+//                        tab.setIcon(R.drawable.selector_home) //초기 화면. 그런데 이렇게 코드를 짰을 때 문제는 다른 탭/뷰페이저가 지정된 상태에서 앱이 시작했을 때다.
+//                        tab.text = HomeFragment_TAG
+//                    }
+//                    1 -> {
+//                        tab.setIcon(R.drawable.selector_likes)
+//                        tab.text = SearchFragment_TAG
+//                    }
+//                    2 -> {
+//                        tab.setIcon(R.drawable.selector_search)
+//                        tab.text = MyVideoFragment_TAG
+//                    }
+//                }
+//            }.attach()
+//        }
+//    }
 }
