@@ -3,9 +3,14 @@ package com.example.youtubeapi.data.model.dto
 data class Video(
     val kind: String,
     val etag: String,
-    val id: String,
+    val id: Id,
     val snippet: VideoSnippet,
     val contentDetails: VideoContentDetails,
+)
+
+data class Id(
+    val kind: String,
+    val videoId: String,
 )
 
 data class VideoSnippet(

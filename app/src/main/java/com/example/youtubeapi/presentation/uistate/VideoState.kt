@@ -18,7 +18,7 @@ data class VideoState(
  * thumbnail resolution default
  * */
 fun Video.asVideoState() = VideoState(
-    id = id,
+    id = id.videoId,
     title = snippet.title,
     description = snippet.description,
     channelTitle = snippet.channelTitle,

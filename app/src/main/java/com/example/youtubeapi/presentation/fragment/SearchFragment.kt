@@ -53,7 +53,7 @@ class SearchFragment : Fragment() {
             viewModel.uiState.collect { uiState ->
                 when (uiState) {
                     is LatestNewsUiState.Success -> {
-                        searchListAdapter.submitList(uiState.videoResponse!!.items)
+                        // searchListAdapter.submitList(uiState.videoResponse!!.items)
                     }
 
                     is LatestNewsUiState.Error -> initRVItem()
