@@ -24,6 +24,14 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+
+        android:backgroundTint="@color/almost_black"
+        app:tabIconTint="@drawable/selected_tab_color"
+        app:tabIndicatorColor="@color/white"
+
+        app:tabRippleColor="@color/whitish_grey"
+        app:tabSelectedTextColor="@color/white"
+        app:tabTextColor="@color/whitish_grey" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
