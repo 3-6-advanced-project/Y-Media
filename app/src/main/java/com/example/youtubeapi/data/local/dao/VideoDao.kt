@@ -4,7 +4,7 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
-import com.example.youtubeapi.data.model.VideoEntity
+import com.example.youtubeapi.data.model.entity.VideoEntity
 
 @Dao
 interface VideoDao {

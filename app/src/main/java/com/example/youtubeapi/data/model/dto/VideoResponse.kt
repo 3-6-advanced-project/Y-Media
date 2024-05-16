@@ -1,4 +1,6 @@
-package com.example.youtubeapi.data.model
+package com.example.youtubeapi.data.model.dto
+
+import com.example.youtubeapi.data.model.entity.Video
 
 data class VideoResponse(
     val kind: String,

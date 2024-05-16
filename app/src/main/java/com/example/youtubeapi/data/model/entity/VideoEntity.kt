@@ -1,4 +1,4 @@
-package com.example.youtubeapi.data.model
+package com.example.youtubeapi.data.model.entity
 
 import androidx.room.Embedded
 import androidx.room.Entity
