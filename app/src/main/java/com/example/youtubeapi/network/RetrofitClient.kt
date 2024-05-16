@@ -1,6 +1,6 @@
 package com.example.youtubeapi.network
 
-import com.example.youtubeapi.data.remote.RemoteDataSource
+import com.example.youtubeapi.data.remote.GoogleApiDataSource
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -23,8 +23,8 @@ object RetrofitClient {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
-    val search: RemoteDataSource by lazy {
-        retrofit.create(RemoteDataSource::class.java)
+    val search: GoogleApiDataSource by lazy {
+        retrofit.create(GoogleApiDataSource::class.java)
     }
 }
 
