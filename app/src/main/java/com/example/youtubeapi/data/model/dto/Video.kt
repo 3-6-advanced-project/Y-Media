@@ -1,11 +1,18 @@
 package com.example.youtubeapi.data.model.dto
 
-data class Video(
+data class HomeVideo(
+    val kind: String,
+    val etag: String,
+    val id: String,
+    val snippet: VideoSnippet,
+    val contentDetails: VideoContentDetails,
+)
+
+data class SearchVideo(
     val kind: String,
     val etag: String,
     val id: Id,
     val snippet: VideoSnippet,
-    val contentDetails: VideoContentDetails
 )
 
 data class Id(
