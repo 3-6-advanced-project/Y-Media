@@ -6,9 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import com.example.youtubeapi.R
+import com.example.youtubeapi.bookmarkDummy
+import com.example.youtubeapi.data.model.entity.VideoEntity
 import com.example.youtubeapi.databinding.FragmentMyVideoBinding
 import com.example.youtubeapi.viewmodel.MainViewModel
+import kotlinx.coroutines.launch
 
 class MyVideoFragment : Fragment() {
 
@@ -22,5 +26,6 @@ class MyVideoFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
     }
 }
