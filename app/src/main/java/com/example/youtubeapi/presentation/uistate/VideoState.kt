@@ -1,8 +1,8 @@
 package com.example.youtubeapi.presentation.uistate
 
 import com.example.youtubeapi.data.model.dto.HomeVideo
-import com.example.youtubeapi.data.model.dto.Thumbnail
 import com.example.youtubeapi.data.model.dto.SearchVideo
+import com.example.youtubeapi.data.model.dto.Thumbnail
 
 data class VideoState(
     val id: String,
