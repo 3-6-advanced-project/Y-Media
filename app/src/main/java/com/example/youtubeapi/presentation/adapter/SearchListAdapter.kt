@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.youtubeapi.data.model.Video
+import com.example.youtubeapi.data.model.dto.Video
 import com.example.youtubeapi.databinding.ItemSearchBinding
 
 class SearchListAdapter(
@@ -31,8 +31,8 @@ class SearchListAdapter(
     }
 ) {
     inner class ViewHolder(
-        private val binding: ItemSearchBinding
-    ): RecyclerView.ViewHolder(binding.root) {
+        private val binding: ItemSearchBinding,
+    ) : RecyclerView.ViewHolder(binding.root) {
         fun onBind(position: Int) = with(binding) {
             val data = getItem(position)
 
