@@ -24,7 +24,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         initView()
-        clickedView()
     }
 
     private fun initView() {
@@ -33,52 +32,19 @@ class MainActivity : AppCompatActivity() {
             TabLayoutMediator(tl, vp) { tab, position ->
                 when(position) {
                     0 -> {
-                        tab.setIcon(R.drawable.ic_home) //초기 화면. 그런데 이렇게 코드를 짰을 때 문제는 다른 탭/뷰페이저가 지정된 상태에서 앱이 시작했을 때다.
+                        tab.setIcon(R.drawable.selector_home) //초기 화면. 그런데 이렇게 코드를 짰을 때 문제는 다른 탭/뷰페이저가 지정된 상태에서 앱이 시작했을 때다.
                         tab.text = HomeFragment_TAG
                     }
                     1 -> {
-                        tab.setIcon(R.drawable.ic_search_outline)
+                        tab.setIcon(R.drawable.selector_likes)
                         tab.text = SearchFragment_TAG
                     }
                     2 -> {
-                        tab.setIcon(R.drawable.ic_likes_outline)
+                        tab.setIcon(R.drawable.selector_search)
                         tab.text = MyVideoFragment_TAG
                     }
                 }
             }.attach()
         }
-    }
-
-    private fun clickedView() { //탭 선택시
-        binding.tl.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab?) {
-                when(tab?.position){
-                    0 -> {
-                        tab.setIcon(R.drawable.ic_home)
-                    }
-                    1 -> {
-                        tab.setIcon(R.drawable.ic_search)
-                    }
-                    2 -> {
-                        tab.setIcon(R.drawable.ic_likes)
-                    }
-                }
-            }
-            override fun onTabUnselected(tab: TabLayout.Tab?) {
-                when(tab?.position){
-                    0 -> {
-                        tab.setIcon(R.drawable.ic_home_outline)
-                    }
-                    1 -> {
-                        tab.setIcon(R.drawable.ic_search_outline)
-                    }
-                    2 -> {
-                        tab.setIcon(R.drawable.ic_likes_outline)
-                    }
-                }
-            }
-            override fun onTabReselected(tab: TabLayout.Tab?) {}
-        })
-
     }
 }
