@@ -1,4 +1,4 @@
-package com.example.youtubeapi.adapter
+package com.example.youtubeapi.presentation.adapter
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
