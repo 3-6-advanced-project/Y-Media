@@ -5,11 +5,12 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import com.example.youtubeapi.data.model.entity.VideoEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface VideoEntityDao {
     @Query("SELECT * FROM VideoEntity")
-    fun getAllVideoEntity(): List<VideoEntity>
+    fun getAllVideoEntity(): Flow<List<VideoEntity>>
     @Delete
     fun deleteVideoEntity(videoEntity: VideoEntity)
     @Insert
