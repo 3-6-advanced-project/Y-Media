@@ -6,6 +6,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
+import coil.transform.CircleCropTransformation
+import com.example.youtubeapi.R
 import com.example.youtubeapi.databinding.ItemSearchBinding
 import com.example.youtubeapi.presentation.uistate.VideoState
 
@@ -42,9 +45,13 @@ class SearchListAdapter(
         fun onBind(position: Int) = with(binding) {
             val data = getItem(position)
 
-            // ivVideoThumbnail.load(data)
-            tvVideoTitle.setText(data.title)
-            tvVideoCreator.setText(data.channelTitle)
+            ivVideoThumbnail.load(data.thumbnail.url) {
+                placeholder(R.drawable.ic_search_outline)
+                // transformations(CircleCropTransformation())
+            }
+
+            tvVideoTitle.text = data.title
+            tvVideoCreator.text = data.channelTitle
         }
     }
 
@@ -52,7 +59,9 @@ class SearchListAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ItemSearchBinding.inflate(
-            LayoutInflater.from(parent.context)
+            LayoutInflater.from(parent.context),
+            parent,
+            false
         )
 
         return ViewHolder(binding)

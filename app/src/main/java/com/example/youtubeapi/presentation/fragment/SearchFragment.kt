@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.youtubeapi.R
 import com.example.youtubeapi.adapter.SearchListAdapter
 import com.example.youtubeapi.databinding.FragmentSearchBinding
+import com.example.youtubeapi.presentation.adapter.decoration.ListItemDecoration
 import com.example.youtubeapi.viewmodel.LatestNewsUiState
 import com.example.youtubeapi.viewmodel.MainViewModel
 import com.example.youtubeapi.viewmodel.MainViewModelFactory
@@ -40,11 +41,17 @@ class SearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.onSearch("cat")
+        viewModel.onSearch("cats")
 
         with(binding.rvSearch) {
             adapter = searchListAdapter
             layoutManager = LinearLayoutManager(requireContext())
+
+            addItemDecoration(
+                ListItemDecoration(resources.displayMetrics.density).apply {
+                    setPaddingValues(bottomDp = 16)
+                }
+            )
         }
 
         lifecycleScope.launch {
@@ -52,7 +59,7 @@ class SearchFragment : Fragment() {
                 when (uiState) {
                     is LatestNewsUiState.Success -> {
                         val videoStates = uiState.videoStates
-                        searchListAdapter.submitList(videoStates)
+                        searchListAdapter.submitList(videoStates.toMutableList())
                     }
                     is LatestNewsUiState.Error -> initRVItem()
                 }

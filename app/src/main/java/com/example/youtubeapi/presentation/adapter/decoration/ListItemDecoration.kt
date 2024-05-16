@@ -31,10 +31,10 @@ class ListItemDecoration(
         startDp: Int = 0,
         endDp: Int = 0,
     ) {
-        val topPaddingValues = (topDp * density + 0.5f).toInt()
-        val startPaddingValues = (startDp * density + 0.5f).toInt()
-        val endPaddingValues = (endDp * density + 0.5f).toInt()
-        val bottomPaddingValues = (bottomDp * density + 0.5f).toInt()
+        topPaddingValues = (topDp * density + 0.5f).toInt()
+        startPaddingValues = (startDp * density + 0.5f).toInt()
+        endPaddingValues = (endDp * density + 0.5f).toInt()
+        bottomPaddingValues = (bottomDp * density + 0.5f).toInt()
     }
 
     /**
@@ -44,10 +44,10 @@ class ListItemDecoration(
         dp: Int = 0
     ) {
         val temp = (dp * density + 0.5f).toInt()
-        val topPaddingValues = temp
-        val startPaddingValues = temp
-        val endPaddingValues = temp
-        val bottomPaddingValues = temp
+        topPaddingValues = temp
+        startPaddingValues = temp
+        endPaddingValues = temp
+        bottomPaddingValues = temp
     }
 
     override fun getItemOffsets(

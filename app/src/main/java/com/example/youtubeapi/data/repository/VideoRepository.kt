@@ -22,7 +22,7 @@ class VideoRepository(
 
     suspend fun getSearchVideo(
         query: String,
-        @IntRange(from = 1, to = 50) maxResults: Int = 2,
+        @IntRange(from = 1, to = 50) maxResults: Int = 50,
         videoDefinition: String = "high",
     ) = googleApiDataSource.getSearchVideo(
         query = query,
