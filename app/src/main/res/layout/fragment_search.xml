@@ -40,6 +40,9 @@
                 android:layout_marginStart="12dp"
                 android:background="@null"
                 android:hint="@string/search_fragment_search_edit_text_hint"
+                android:imeOptions="actionDone"
+                android:inputType="text"
+                android:singleLine="true"
                 android:textColorHint="@color/light_grey"
                 android:textColor="@color/white"
                 android:textSize="16sp"/>

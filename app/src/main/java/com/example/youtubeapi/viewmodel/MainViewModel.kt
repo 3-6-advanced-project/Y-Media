@@ -15,9 +15,9 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 // Represents different states for the LatestNews screen
-sealed class LatestNewsUiState {
-    data class Success(val videoStates: List<VideoState>) : LatestNewsUiState()
-    data class Error(val exception: Throwable) : LatestNewsUiState()
+sealed interface LatestNewsUiState {
+    data class Success(val videoStates: List<VideoState>) : LatestNewsUiState
+    data class Error(val exception: Throwable) : LatestNewsUiState
 }
 
 class MainViewModel(
