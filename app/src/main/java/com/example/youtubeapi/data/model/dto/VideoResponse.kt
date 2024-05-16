@@ -1,19 +1,17 @@
 package com.example.youtubeapi.data.model.dto
 
-import com.example.youtubeapi.data.model.entity.Video
-
 data class VideoResponse(
     val kind: String,
     val etag: String,
     val nextPageToken: String,
     val regionCode: String,
     val pageInfo: PageInfo,
-    val items: List<Video>
+    val items: List<Video>,
 )
 
 data class PageInfo(
     val totalResults: Int,
-    val resultsPerPage: Int
+    val resultsPerPage: Int,
 )
 
 
