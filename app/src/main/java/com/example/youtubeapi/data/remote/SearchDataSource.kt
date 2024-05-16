@@ -13,14 +13,14 @@ interface SearchDataSource {
      * 실사용: https://www.googleapis.com/youtube/v3/search?
      *
      * 검색 시, 필터나 정렬을 적용할 수 있는 쿼리 리스트업
-     * videoDefinition - 필터(화질)
+     * videoDefinition - 필터 (화질)
      *    any - 해상도에 관계없이 모든 동영상을 반환합니다.
      *    high – HD 동영상만 검색합니다.
      *    standard – 표준 화질 동영상만 검색합니다.
      *
      *    * 위 속성을 쓸 경우 type 값으로 "video"를 전달해야함
      *
-     * videoDuration - 필터(영상 시간)
+     * videoDuration - 필터 (영상 시간)
      *    any – 동영상 길이를 기준으로 동영상 검색결과를 필터링하지 않습니다. 기본값입니다.
      *    long – 20분보다 긴 동영상만 포함합니다.
      *    medium – 4분 이상 20분 이하인 동영상만 포함합니다.
