@@ -54,10 +54,10 @@ object RetrofitClient {
 /**
  *
  *
- * Youtube Video List api
+ * Youtube SearchVideo List api
  *      GET https://developers.google.com/youtube/v3/docs/videos/list?hl=ko
  *
- * Youtube Video Category api
+ * Youtube SearchVideo Category api
  *      GET https://www.googleapis.com/youtube/v3/videoCategories
  *
  *

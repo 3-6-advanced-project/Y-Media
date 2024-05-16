@@ -17,18 +17,16 @@ import com.example.youtubeapi.viewmodel.MainViewModelFactory
 import kotlinx.coroutines.launch
 
 class SearchFragment : Fragment() {
-
     private val binding by lazy { FragmentSearchBinding.inflate(layoutInflater) }
+
     private val viewModel: MainViewModel by activityViewModels() {
         MainViewModelFactory()
     }
 
     private val searchListAdapter = SearchListAdapter() { video ->
-        val videoId = video.id.videoId
-
         // TODO : 이후 VideoDetailFragment()의 companion object{}에서 parameter를 받도록 수정되면 videoId값 넘겨줘야함
         requireActivity().supportFragmentManager.beginTransaction()
-            // .replace(R.id.ll_top, VideoDetailFragment.newInstance(videoId))
+            // .replace(R.id.fl_item, VideoDetailFragment.newInstance(video.id))
             .replace(R.id.ll_top, VideoDetailFragment())
             .addToBackStack(null)
             .commit()
@@ -53,14 +51,17 @@ class SearchFragment : Fragment() {
             viewModel.uiState.collect { uiState ->
                 when (uiState) {
                     is LatestNewsUiState.Success -> {
-                        // searchListAdapter.submitList(uiState.videoResponse!!.items)
+                        val videoStates = uiState.videoStates
+                        searchListAdapter.submitList(videoStates)
                     }
-
                     is LatestNewsUiState.Error -> initRVItem()
                 }
             }
-
         }
+    }
+
+    private fun setItems(uiState: LatestNewsUiState.Success) {
+
     }
 
     private fun initRVItem() = with(binding) {

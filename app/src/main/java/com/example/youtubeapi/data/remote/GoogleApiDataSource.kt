@@ -1,6 +1,8 @@
 package com.example.youtubeapi.data.remote
 
 import com.example.youtubeapi.BuildConfig
+import com.example.youtubeapi.data.model.dto.HomeVideo
+import com.example.youtubeapi.data.model.dto.SearchVideo
 import com.example.youtubeapi.data.model.dto.VideoResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -17,7 +19,7 @@ interface GoogleApiDataSource {
         @Query("maxWidth") maxWidth: Int,
         @Query("regionCode") regionCode: String = "KR",
         @Query("videoCategoryId") videoCategoryId: String,
-    ): VideoResponse
+    ): VideoResponse<HomeVideo>
 
     /** 동영상 검색 API
      *
@@ -38,6 +40,10 @@ interface GoogleApiDataSource {
      *    medium – 4분 이상 20분 이하인 동영상만 포함합니다.
      *    short – 4분 미만인 동영상만 포함합니다.
      *
+     * videoCategoryId - 필터 (카테고리)
+     *    videoCategoryId 매개변수는 카테고리를 기준으로 동영상 검색결과를 필터링합니다.
+     *    이 매개변수의 값을 지정하는 경우 type 매개변수의 값도 video로 설정해야 합니다.
+     *
      * order(기본값 relevance) - 정렬
      *    date – 리소스를 만든 날짜를 기준으로 최근 항목부터 시간 순서대로 리소스를 정렬합니다.
      *    rating – 높은 평점에서 낮은 평점순으로 리소스가 정렬됩니다.
@@ -57,5 +63,7 @@ interface GoogleApiDataSource {
         @Query("type") type: String = "video", // video, channel, playlist
         @Query("part") part: String = "snippet",
         @Query("regionCode") regionCode: String = "KR",
-    ): VideoResponse
+        // @Query("relevanceLanguage") relevanceLanguage: String = "KR", // 지정된 언어와 가장 관련성이 높은 검색결과를 반환
+
+    ): VideoResponse<SearchVideo>
 }
