@@ -35,8 +35,7 @@ class SearchFragment : Fragment() {
     private val searchListAdapter = SearchListAdapter() { videoId ->
         // TODO : 이후 VideoDetailFragment()의 companion object{}에서 parameter를 받도록 수정되면 videoId값 넘겨줘야함
         requireActivity().supportFragmentManager.beginTransaction()
-            // .replace(R.id.fl_item, VideoDetailFragment.newInstance(videoId))
-            .replace(R.id.ll_top, VideoDetailFragment())
+            .replace(R.id.fl, VideoDetailFragment()) // VideoDetailFragment.newInstance(videoId)
             .addToBackStack(null)
             .commit()
     }
