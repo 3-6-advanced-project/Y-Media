@@ -64,12 +64,14 @@ class MainViewModel(
             Log.e("Api Call Error", it.message.toString())
         }
     }
-
+//Gson converter = dto 만들어서 class로 변환...
     fun onDetail(videoId: String) = viewModelScope.launch{
         runCatching {
-            val videos = videoRepository.getVideoById(videoId = videoId)
+            val videos = videoRepository.getVideoById(videoId = videoId) //여기까진 해당 videos list(항 1개) 들고옴 이해함
+            Log.d("test 1", "1")
             val videoState = videos.items.map { it.asVideoState() } //이 코드는 뭐 하는 거지? 각 비디오 (지금은 1개)내 정렬?
-            _uiState.value = LatestNewsUiState.Success(videoState) //이해못함
+            Log.d("test 2", "2")
+            _uiState.value = LatestNewsUiState.Success(videoState) //이해못함 > uistate값을 ui 띄울때 불러와야됨
             Log.d("Api Call Success", videoState.toString())
         }.onFailure {
             _uiState.value = LatestNewsUiState.Error(it)

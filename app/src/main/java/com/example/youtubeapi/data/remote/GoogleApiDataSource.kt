@@ -72,6 +72,17 @@ interface GoogleApiDataSource {
     suspend fun getVideoById(
         @Query("key") key: String = BuildConfig.GOOGLE_API_KEY,
         @Query("id") id: String,
+        @Query("part") part: String = "snippet",
         @Query("maxResults") maxResults: Int
     ): VideoResponse<VideoById>
-}
+
+//    //https://developers.google.com/youtube/v3/docs/channels/list
+//    @GET("youtube/v3/channels")
+//    suspend fun getChannelById(
+//        @Query("key") key: String = BuildConfig.GOOGLE_API_KEY,
+//        @Query("id") id: String, //영상 id인 듯!
+//        @Query("snippet") part: String = "thumbnails", //
+//        @Query("statistics") statistics: String = "subscriberCount",
+//        @Query("maxResults") maxResults: Int
+//    ): VideoResponse<VideoById>
+//}

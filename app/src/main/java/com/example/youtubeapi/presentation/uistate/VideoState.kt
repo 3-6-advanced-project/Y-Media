@@ -14,6 +14,7 @@ data class VideoState(
     val duration: String = "",
     val categoryId: String = "",
     val publishedAt: String,
+    val channelId: String = "" //디폴트값 지정 헉!
 )
 
 /**
@@ -40,8 +41,9 @@ fun SearchVideo.asVideoState() = VideoState(
 )
 
 fun VideoById.asVideoState() = VideoState(
-    id = id.videoId,
+    id = id,
     title = snippet.title,
+    channelId = snippet.channelId,
     description = snippet.description,
     channelTitle = snippet.channelTitle,
     thumbnail = snippet.thumbnails.high, //고화질 썸네일
