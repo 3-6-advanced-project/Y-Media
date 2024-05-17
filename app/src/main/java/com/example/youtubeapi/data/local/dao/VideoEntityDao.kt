@@ -10,8 +10,10 @@ import com.example.youtubeapi.data.model.entity.VideoEntity
 interface VideoEntityDao {
     @Query("SELECT * FROM VideoEntity")
     fun getAllVideoEntity(): List<VideoEntity>
+
     @Delete
     fun deleteVideoEntity(videoEntity: VideoEntity)
+
     @Insert
     fun insertVideoEntity(videoEntity: VideoEntity): Long
 }

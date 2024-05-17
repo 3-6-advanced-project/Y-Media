@@ -1,19 +1,37 @@
 package com.example.youtubeapi.presentation.fragment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.youtubeapi.R
+import com.example.youtubeapi.adapter.SearchListAdapter
 import com.example.youtubeapi.databinding.FragmentSearchBinding
+import com.example.youtubeapi.presentation.adapter.decoration.ListItemDecoration
+import com.example.youtubeapi.viewmodel.LatestNewsUiState
 import com.example.youtubeapi.viewmodel.MainViewModel
+import com.example.youtubeapi.viewmodel.MainViewModelFactory
+import kotlinx.coroutines.launch
 
 class SearchFragment : Fragment() {
-
     private val binding by lazy { FragmentSearchBinding.inflate(layoutInflater) }
-    private val viewModel: MainViewModel by activityViewModels()
+
+    private val viewModel: MainViewModel by activityViewModels() {
+        MainViewModelFactory()
+    }
+
+    private val searchListAdapter = SearchListAdapter() { video ->
+        // TODO : 이후 VideoDetailFragment()의 companion object{}에서 parameter를 받도록 수정되면 videoId값 넘겨줘야함
+        requireActivity().supportFragmentManager.beginTransaction()
+            // .replace(R.id.fl_item, VideoDetailFragment.newInstance(video.id))
+            .replace(R.id.ll_top, VideoDetailFragment())
+            .addToBackStack(null)
+            .commit()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -22,6 +40,38 @@ class SearchFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        viewModel.onSearch("cats")
+
+        with(binding.rvSearch) {
+            adapter = searchListAdapter
+            layoutManager = LinearLayoutManager(requireContext())
+
+            addItemDecoration(
+                ListItemDecoration(resources.displayMetrics.density).apply {
+                    setPaddingValues(bottomDp = 16)
+                }
+            )
+        }
+
+        lifecycleScope.launch {
+            viewModel.uiState.collect { uiState ->
+                when (uiState) {
+                    is LatestNewsUiState.Success -> {
+                        val videoStates = uiState.videoStates
+                        searchListAdapter.submitList(videoStates.toMutableList())
+                    }
+                    is LatestNewsUiState.Error -> initRVItem()
+                }
+            }
+        }
+    }
+
+    private fun setItems(uiState: LatestNewsUiState.Success) {
+
+    }
+
+    private fun initRVItem() = with(binding) {
 
     }
 }
