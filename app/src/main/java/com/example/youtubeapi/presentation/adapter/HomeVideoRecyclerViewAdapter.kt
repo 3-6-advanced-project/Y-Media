@@ -10,9 +10,9 @@ import coil.load
 import com.example.youtubeapi.databinding.ItemHomeFragmentVideoBinding
 import com.example.youtubeapi.presentation.uistate.VideoState
 
-class HomeRecyclerViewAdapter(
+class HomeVideoRecyclerViewAdapter(
     private val fragment: Fragment
-): RecyclerView.Adapter<HomeRecyclerViewAdapter.VideoViewHolder>() {
+): RecyclerView.Adapter<HomeVideoRecyclerViewAdapter.VideoViewHolder>() {
 
     private val itemList = mutableListOf<VideoState>()
     private var videoClickListener: VideoClickListener? = null
@@ -36,7 +36,7 @@ class HomeRecyclerViewAdapter(
             tvTitle.text = current.title
             tvDescription.text = current.description
             root.setOnClickListener {
-                videoClickListener?.onClick(current)
+                videoClickListener?.onVideoClick(current)
             }
         }
     }
@@ -58,5 +58,5 @@ class HomeRecyclerViewAdapter(
 }
 
 interface VideoClickListener {
-    fun onClick(videoState: VideoState)
+    fun onVideoClick(videoState: VideoState)
 }

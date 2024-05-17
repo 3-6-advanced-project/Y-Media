@@ -4,6 +4,7 @@ import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.youtubeapi.data.model.dto.Thumbnail
+import com.example.youtubeapi.presentation.uistate.VideoState
 
 // TODO: duration 반영 필요
 
@@ -19,5 +20,7 @@ data class VideoEntity(
     val channelId: String,
     val publishedAt: String,
     val publishTime: String,
+    val duration: String,
+    val thumbnailUrl: String,
     @Embedded val thumbnail: Thumbnail
 )

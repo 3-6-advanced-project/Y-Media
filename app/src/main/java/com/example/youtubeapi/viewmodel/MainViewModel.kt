@@ -3,8 +3,10 @@ package com.example.youtubeapi.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.example.youtubeapi.data.model.dto.Channel
 import com.example.youtubeapi.data.model.dto.VideoCategory
 import com.example.youtubeapi.data.repository.VideoRepository
+import com.example.youtubeapi.extractChannelIdStringFromVideos
 import com.example.youtubeapi.network.RetrofitClient
 import com.example.youtubeapi.presentation.uistate.VideoState
 import com.example.youtubeapi.presentation.uistate.asVideoState
@@ -23,7 +25,7 @@ class MainViewModel(
     private val _mostPopularVideosWithCategory = MutableStateFlow(listOf<VideoState>())
     val mostPopularVideoWithCategory = _mostPopularVideosWithCategory.asStateFlow()
 
-    private val _channels = MutableStateFlow(listOf<String>())
+    private val _channels = MutableStateFlow(listOf<Channel>())
     val channels = _channels.asStateFlow()
 
     private val _categories = MutableStateFlow(listOf<VideoCategory>())
@@ -52,12 +54,19 @@ class MainViewModel(
         }
     }
 
-    private fun initCurrentCategory(videoCategory: VideoCategory) {
+    fun initCurrentCategory(videoCategory: VideoCategory) {
         _currentCategory.value = videoCategory
+
         viewModelScope.launch(Dispatchers.IO) {
-            videoRepository.getMostPopularVideo(videoCategoryId = videoCategory.id)
+            val temp = videoRepository
+                .getMostPopularVideo(videoCategoryId = videoCategory.id).items
+
+            _mostPopularVideosWithCategory.value = temp.map { it.asVideoState() }
+            _channels.value = videoRepository
+                .getChannels(extractChannelIdStringFromVideos(temp)).items
         }
     }
+
 }
 
 class MainViewModelFactory: ViewModelProvider.Factory {

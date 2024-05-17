@@ -2,6 +2,24 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.YoutubeAPI" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
+        <item name="popupMenuStyle">@style/MyPopupMenu</item>
+        <item name="android:popupMenuStyle">@style/MyPopupMenu</item>
+        <item name="android:textAppearanceLargePopupMenu">@style/myPopupMenuTextAppearanceLarge</item>
+        <item name="android:textAppearanceSmallPopupMenu">@style/myPopupMenuTextAppearanceSmall</item>
+    </style>
+
+
+    <style name="MyPopupMenu" parent="Widget.Material3.PopupMenu">
+    </style>
+
+    <style name="myPopupMenuTextAppearanceSmall" parent="@android:style/TextAppearance.DeviceDefault.Widget.PopupMenu.Small">
+        <item name="android:textColor">@color/almost_black</item>
+        <item name="android:textSize">8sp</item>
+    </style>
+
+    <style name="myPopupMenuTextAppearanceLarge" parent="@android:style/TextAppearance.DeviceDefault.Widget.PopupMenu.Large">
+        <item name="android:textColor">@color/almost_black</item>
+        <item name="android:textSize">12sp</item>
     </style>
 
     <style name="Theme.YoutubeAPI" parent="Base.Theme.YoutubeAPI" />
