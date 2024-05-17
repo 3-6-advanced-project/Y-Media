@@ -1,6 +1,7 @@
 package com.example.youtubeapi.presentation.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -44,6 +45,13 @@ class VideoDetailFragment : Fragment() {
             //binding.llThumbnail = ... 전달받은 thumbnail 사진과 연결
         }
 
+        binding.ivLikesButton.setOnClickListener{
+            //좋아요가 이미 눌려진 영상인지 판정하기
+            val isVideoLiked = false //실제론 ROOM에서 들고옴
+
+
+        }
+
     }
 
     private fun initViewModel() = lifecycleScope.launch { //변화 감지 갱신
@@ -56,6 +64,7 @@ class VideoDetailFragment : Fragment() {
                         binding.ivThumbnail.load(videoStates[0].thumbnail.url){ //glide나 [coil]로 웹 이미지 로드
                             placeholder(R.drawable.img_thumbnail_test) //적용 전
                         }
+                        Log.d("videoStates", videoStates.size.toString())
                         binding.tvTitle.text = videoStates[0].title
                         binding.tvChannel.text = videoStates[0].channelTitle
                         binding.ivChannelProfile.load(videoStates[0].thumbnail.url) //우선 섬네일 넣어뒀는데 채널 사진으로 바꾸어야 됨. 갖고 올 수 있는 건가???
