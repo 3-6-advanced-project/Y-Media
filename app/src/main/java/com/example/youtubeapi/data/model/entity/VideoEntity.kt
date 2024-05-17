@@ -19,5 +19,6 @@ data class VideoEntity(
     val channelId: String,
     val publishedAt: String,
     val publishTime: String,
+    val duration: String,
     @Embedded val thumbnail: Thumbnail
 )
