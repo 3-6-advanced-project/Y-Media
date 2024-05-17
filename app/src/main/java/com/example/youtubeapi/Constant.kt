@@ -22,9 +22,10 @@ val bookmarkDummy = VideoEntity(
     channelId = "UCCjHwLqUSjxB7NtvUK9fcmw",
     publishedAt = "2024-03-28T02:25:27Z",
     publishTime = "2024-03-28T02:25:27Z",
+    duration = "",
+    thumbnailUrl = "",
     thumbnail = Thumbnail(
-        url = "https://yt3.ggpht.com/W0oCPGjS20ws_0k1oMFmMIx3NgMy9PTH" +
-                "DWzUbxPdBH_GtN8mQLMRtDGpZwlwBK6iwqSaMFmOpxQ=s88-c-k-c0xffffffff-no-rj-mo"
+        url = ""
     )
 )
 
