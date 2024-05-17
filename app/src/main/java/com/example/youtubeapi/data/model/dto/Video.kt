@@ -14,7 +14,7 @@ data class SearchVideo(
     val id: Id,
     val snippet: VideoSnippet,
 )
-data class FindVideoById(
+data class VideoById(
     val kind: String,
     val etag: String,
     val id: Id,
