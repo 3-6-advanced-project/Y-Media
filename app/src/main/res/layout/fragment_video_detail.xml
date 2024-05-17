@@ -25,22 +25,24 @@
 
     <LinearLayout
         android:id="@+id/ll_thumbnail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintDimensionRatio="1.77777777778f"
         app:layout_constraintTop_toBottomOf="@id/ll_top_bar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:paddingLeft="@dimen/default_horizontal_margin12"
-        android:paddingRight="@dimen/default_horizontal_margin12">
+        android:layout_marginLeft="@dimen/default_horizontal_margin12"
+        android:layout_marginRight="@dimen/default_horizontal_margin12">
         <androidx.cardview.widget.CardView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             app:cardCornerRadius="@dimen/default_horizontal_margin12">
             <ImageView
                 android:id="@+id/iv_thumbnail"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
                 android:src="@drawable/img_thumbnail_test"/>
         </androidx.cardview.widget.CardView>
     </LinearLayout>
