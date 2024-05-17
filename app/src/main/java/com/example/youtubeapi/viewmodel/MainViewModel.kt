@@ -45,10 +45,12 @@ class MainViewModel(
 
     fun onSearch(
         query: String,
+        videoDuration: String
     ) = viewModelScope.launch {
         runCatching {
             val videos = videoRepository.getSearchVideo(
-                query = query
+                query = query,
+                videoDuration = videoDuration
             )
 
             val videoState = videos.items.map {

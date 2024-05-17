@@ -34,8 +34,16 @@ class SearchFragment : Fragment() {
     }
 
     // TODO : 이후 VideoDetailFragment()의 companion object{}에서 parameter를 받도록 수정되면 videoId값 넘겨줘야함
-    private val searchListAdapter = SearchListAdapter() { videoId ->
-        showDetailFragment(videoId)
+    private val searchListAdapter: SearchListAdapter by lazy {
+        SearchListAdapter() { videoId ->
+            showDetailFragment(videoId)
+        }
+    }
+
+    private val searchFilterAdapter: SearchFilterAdapter by lazy {
+        SearchFilterAdapter(
+            listOf("Any", "Less than 4 minutes", "4 to 20 minutes", "more than 20 minutes")
+        )
     }
 
     override fun onCreateView(
@@ -62,29 +70,26 @@ class SearchFragment : Fragment() {
 
     private fun initEditTextDoneActionListener() = with(binding) {
         etSearchKeyword.setOnEditorActionListener { v, actionId, event ->
-            var handled = false
-
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-                // 키보드 내리기
-                val imm =
-                    requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                imm.hideSoftInputFromWindow(
-                    requireActivity().window.decorView.applicationWindowToken,
-                    0
-                )
-
-                viewModel.onSearch(etSearchKeyword.text.toString())
-                handled = true
+            if (actionId != EditorInfo.IME_ACTION_DONE) {
+                false
             }
 
-            handled
+            // 키보드 내리기
+            val imm = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(requireActivity().window.decorView.applicationWindowToken, 0)
+
+            val filterTypes = listOf("any", "short", "medium", "short")
+            viewModel.onSearch(
+                query = etSearchKeyword.text.toString(),
+                videoDuration = filterTypes[searchFilterAdapter.currentSelectPosition]
+            )
+
+            true
         }
     }
 
     private fun initFilterItems() = with(binding.rvSearchFilter) {
-        adapter = SearchFilterAdapter(
-            listOf("Any", "Less than 4 minutes", "4 to 20 minutes", "more than 20 minutes")
-        )
+        adapter = searchFilterAdapter
 
         addItemDecoration(
             ListItemDecoration(resources.displayMetrics.density).apply {

@@ -1,6 +1,5 @@
 package com.example.youtubeapi.presentation.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -10,7 +9,7 @@ class SearchFilterAdapter(
     private val types: List<String>
 ): RecyclerView.Adapter<SearchFilterAdapter.Holder>()
 {
-    private var currentSelectPosition = 0
+    var currentSelectPosition = 0
 
     inner class Holder(
         private val binding: ItemSearchFilterBinding
