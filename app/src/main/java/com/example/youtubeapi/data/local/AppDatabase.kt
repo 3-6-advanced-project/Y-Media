@@ -8,13 +8,15 @@ import com.example.youtubeapi.data.local.dao.VideoEntityDao
 import com.example.youtubeapi.data.model.entity.VideoEntity
 
 @Database(entities = [VideoEntity::class], version = 1)
-abstract class AppDatabase: RoomDatabase() {
+abstract class AppDatabase : RoomDatabase() {
     abstract fun videoDao(): VideoEntityDao
+
     companion object {
         private var INSTANCE: AppDatabase? = null
+
         @Synchronized
         fun getInstance(context: Context): AppDatabase? {
-            if(INSTANCE == null) {
+            if (INSTANCE == null) {
                 INSTANCE = Room.databaseBuilder(
                     context,
                     AppDatabase::class.java,

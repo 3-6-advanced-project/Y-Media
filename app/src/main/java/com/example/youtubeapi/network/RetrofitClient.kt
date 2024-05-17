@@ -26,7 +26,6 @@ object RetrofitClient {
      * retrofit -> retrofitVideo 임의 조정
      *
      * */
-
     private val retrofitGoogleApi by lazy {
         Retrofit.Builder()
             .baseUrl(GOOGLE_API_URL_BASE)
@@ -43,7 +42,6 @@ object RetrofitClient {
             .build()
     }
 
-
     val googleApiSource: GoogleApiDataSource by lazy {
         retrofitGoogleApi.create(GoogleApiDataSource::class.java)
     }
@@ -56,10 +54,10 @@ object RetrofitClient {
 /**
  *
  *
- * Youtube Video List api
+ * Youtube SearchVideo List api
  *      GET https://developers.google.com/youtube/v3/docs/videos/list?hl=ko
  *
- * Youtube Video Category api
+ * Youtube SearchVideo Category api
  *      GET https://www.googleapis.com/youtube/v3/videoCategories
  *
  *

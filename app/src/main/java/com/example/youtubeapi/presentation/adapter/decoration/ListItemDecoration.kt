@@ -44,7 +44,7 @@ class ListItemDecoration(
         dp: Int = 0
     ) {
         val temp = (dp * density + 0.5f).toInt()
-        
+
         topPaddingValues = temp
         startPaddingValues = temp
         endPaddingValues = temp
