@@ -29,11 +29,9 @@ class VideoDetailFragment : Fragment() {
 
         binding.btVideo1Test.setOnClickListener {
             val videoId = "vRheHVDYpcY"
-            binding.btVideo1Test.text = videoId
+            viewModel.onDetail(videoId)
+            //binding.llThumbnail = ... 전달받은 thumbnail 사진과 연결
         }
-        binding.btVideo2Test.setOnClickListener {
-            val videoId = "gEV8T3541j8"
-            binding.btVideo2Test.text = videoId
-        }
+
     }
 }
