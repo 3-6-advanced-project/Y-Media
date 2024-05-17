@@ -14,7 +14,7 @@ interface GoogleApiDataSource {
     @GET("youtube/v3/videos")
     suspend fun getMostPopularVideo(
         @Query("key") key: String = BuildConfig.GOOGLE_API_KEY,
-        @Query("part") part: String = "snippet",
+        @Query("part") part: String = "snippet,contentDetails",
         @Query("chart") chart: String = "mostPopular",
         @Query("maxHeight") maxHeight: Int,
         @Query("maxResults") maxResults: Int,
@@ -74,5 +74,12 @@ interface GoogleApiDataSource {
         @Query("key") key: String = BuildConfig.GOOGLE_API_KEY,
         @Query("part") part: String = "snippet",
         @Query("regionCode") regionCode: String = "KR"
+    ): VideoCategoryResponse
+
+    @GET("youtube/v3/channels")
+    suspend fun getChannels(
+        @Query("key") key: String = BuildConfig.GOOGLE_API_KEY,
+        @Query("part") part: String = "snippet",
+        @Query("id") id: String
     ): VideoCategoryResponse
 }

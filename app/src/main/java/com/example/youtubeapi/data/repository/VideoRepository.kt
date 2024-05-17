@@ -18,4 +18,10 @@ class VideoRepository(
         videoCategoryId = videoCategoryId
     )
     suspend fun getVideoCategories() = googleApiDataSource.getVideoCategories()
+
+    /**
+     * @param idListString channel id를 ,로 연결한 string
+     * */
+    suspend fun getChannels(idListString: String) =
+        googleApiDataSource.getChannels(id = idListString)
 }
