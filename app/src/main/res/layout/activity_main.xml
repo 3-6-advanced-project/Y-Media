@@ -7,38 +7,48 @@
     android:layout_height="match_parent"
     tools:context=".presentation.MainActivity">
 
-
-    <androidx.fragment.app.FragmentContainerView
-        android:name="com.example.youtubeapi.presentation.fragment.VideoDetailFragment"
-        android:id="@+id/frag_detail_test"
+    <FrameLayout
+        android:id="@+id/ff_detail"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:elevation="@dimen/default_horizontal_margin16"
+        android:visibility="gone">
+        <androidx.fragment.app.FragmentContainerView
+            android:name="com.example.youtubeapi.presentation.fragment.VideoDetailFragment"
+            android:id="@+id/frag_detail_test"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </FrameLayout>
 
-<!--    <androidx.viewpager2.widget.ViewPager2-->
-<!--        android:id="@+id/vp"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="0dp"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        app:layout_constraintBottom_toTopOf="@id/tl">-->
-<!--    </androidx.viewpager2.widget.ViewPager2>-->
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/vp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/tl">
+    </androidx.viewpager2.widget.ViewPager2>
 
-<!--    <com.google.android.material.tabs.TabLayout-->
-<!--        android:id="@+id/tl"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
 
-<!--        android:backgroundTint="@color/almost_black"-->
-<!--        app:tabIconTint="@drawable/selected_tab_color"-->
-<!--        app:tabIndicatorColor="@color/white"-->
+        android:backgroundTint="@color/almost_black"
+        app:tabIconTint="@drawable/selected_tab_color"
+        app:tabIndicatorColor="@color/white"
 
-<!--        app:tabRippleColor="@color/whitish_grey"-->
-<!--        app:tabSelectedTextColor="@color/white"-->
-<!--        app:tabTextColor="@color/whitish_grey">-->
-<!--    </com.google.android.material.tabs.TabLayout>-->
+        app:tabRippleColor="@color/whitish_grey"
+        app:tabSelectedTextColor="@color/white"
+        app:tabTextColor="@color/whitish_grey">
+    </com.google.android.material.tabs.TabLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
