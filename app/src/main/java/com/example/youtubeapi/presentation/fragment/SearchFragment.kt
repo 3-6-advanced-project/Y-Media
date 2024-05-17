@@ -16,6 +16,8 @@ import com.example.youtubeapi.R
 import com.example.youtubeapi.adapter.SearchListAdapter
 import com.example.youtubeapi.data.local.AppDatabase
 import com.example.youtubeapi.databinding.FragmentSearchBinding
+import com.example.youtubeapi.presentation.adapter.SearchFilterAdapter
+import com.example.youtubeapi.presentation.adapter.TypeItem
 import com.example.youtubeapi.presentation.adapter.decoration.ListItemDecoration
 import com.example.youtubeapi.viewmodel.LatestNewsUiState
 import com.example.youtubeapi.viewmodel.MainViewModel
@@ -32,12 +34,9 @@ class SearchFragment : Fragment() {
         MainViewModelFactory(db.videoDao())
     }
 
+    // TODO : 이후 VideoDetailFragment()의 companion object{}에서 parameter를 받도록 수정되면 videoId값 넘겨줘야함
     private val searchListAdapter = SearchListAdapter() { videoId ->
-        // TODO : 이후 VideoDetailFragment()의 companion object{}에서 parameter를 받도록 수정되면 videoId값 넘겨줘야함
-        requireActivity().supportFragmentManager.beginTransaction()
-            .replace(R.id.fl, VideoDetailFragment()) // VideoDetailFragment.newInstance(videoId)
-            .addToBackStack(null)
-            .commit()
+        showDetailFragment(videoId)
     }
 
     override fun onCreateView(
@@ -49,8 +48,17 @@ class SearchFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initEditTextDoneActionListener()
-        initRecyclerView()
+        initFilterItems()
+        initVideoItems()
         initViewModel()
+    }
+
+    private fun showDetailFragment(videoId: String) {
+        // TODO : VideoDetailFragment.newInstance(videoId)로 수정 필요
+        requireActivity().supportFragmentManager.beginTransaction()
+            .replace(R.id.fl, VideoDetailFragment())
+            .addToBackStack(null)
+            .commit()
     }
 
     private fun initEditTextDoneActionListener() = with(binding) {
@@ -59,8 +67,12 @@ class SearchFragment : Fragment() {
 
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 // 키보드 내리기
-                val imm = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                imm.hideSoftInputFromWindow(requireActivity().window.decorView.applicationWindowToken, 0)
+                val imm =
+                    requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(
+                    requireActivity().window.decorView.applicationWindowToken,
+                    0
+                )
 
                 viewModel.onSearch(etSearchKeyword.text.toString())
                 handled = true
@@ -70,8 +82,25 @@ class SearchFragment : Fragment() {
         }
     }
 
+    private fun initFilterItems() = with(binding.rvSearchFilter) {
+        adapter = SearchFilterAdapter(
+            mutableListOf(
+                TypeItem("Any"),
+                TypeItem("Less than 4 minutes"),
+                TypeItem("4 to 20 minutes"),
+                TypeItem("more than 20 minutes"),
+            )
+        )
 
-    private fun initRecyclerView() = with(binding.rvSearch) {
+        addItemDecoration(
+            ListItemDecoration(resources.displayMetrics.density).apply {
+                setPaddingValues(endDp = 10)
+            }
+        )
+    }
+
+
+    private fun initVideoItems() = with(binding.rvSearch) {
         adapter = searchListAdapter
         layoutManager = LinearLayoutManager(requireContext())
 
@@ -93,6 +122,7 @@ class SearchFragment : Fragment() {
                     switchVisibility(videoStates.size)
 
                 }
+
                 is LatestNewsUiState.Error -> showErrorSnackbar(uiState)
             }
         }
@@ -109,9 +139,10 @@ class SearchFragment : Fragment() {
     }
 
     private fun showErrorSnackbar(uiState: LatestNewsUiState.Error) = with(binding) {
-        Snackbar.make(requireContext(), binding.root, "Search Error..", Snackbar.LENGTH_SHORT).apply {
-            anchorView = binding.rvSearch
-        }.show()
+        Snackbar.make(requireContext(), binding.root, "Search Error..", Snackbar.LENGTH_SHORT)
+            .apply {
+                anchorView = binding.rvSearch
+            }.show()
 
         Log.e("Search API Error", uiState.exception.message.toString())
     }
