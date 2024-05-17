@@ -64,6 +64,18 @@ class MainViewModel(
             Log.e("Api Call Error", it.message.toString())
         }
     }
+
+    fun onDetail(videoId: String) = viewModelScope.launch{
+        runCatching {
+            val videos = videoRepository.getVideoById(videoId = videoId)
+            val videoState = videos.items.map { it.asVideoState() } //이 코드는 뭐 하는 거지? 각 비디오 (지금은 1개)내 정렬?
+            _uiState.value = LatestNewsUiState.Success(videoState) //이해못함
+            Log.d("Api Call Success", videoState.toString())
+        }.onFailure {
+            _uiState.value = LatestNewsUiState.Error(it)
+            Log.e("Api Call Error", it.message.toString())
+        }
+    }
 }
 
 class MainViewModelFactory(
