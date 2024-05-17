@@ -1,5 +1,6 @@
 package com.example.youtubeapi.presentation.uistate
 
+import com.example.youtubeapi.data.model.dto.FindVideoById
 import com.example.youtubeapi.data.model.dto.HomeVideo
 import com.example.youtubeapi.data.model.dto.SearchVideo
 import com.example.youtubeapi.data.model.dto.Thumbnail
@@ -36,4 +37,13 @@ fun SearchVideo.asVideoState() = VideoState(
     channelTitle = snippet.channelTitle,
     thumbnail = snippet.thumbnails.high,
     publishedAt = snippet.publishedAt
+)
+
+fun FindVideoById.asVideoState() = VideoState(
+    id = id.videoId,
+    title = snippet.title,
+    description = snippet.description,
+    channelTitle = snippet.channelTitle,
+    thumbnail = snippet.thumbnails.high, //고화질 썸네일
+    publishedAt = snippet.publishedAt //안쓰지만 없으면 꼬이니까 우선 냅두자/
 )

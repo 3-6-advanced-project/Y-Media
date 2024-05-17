@@ -14,6 +14,13 @@ data class SearchVideo(
     val id: Id,
     val snippet: VideoSnippet,
 )
+data class FindVideoById(
+    val kind: String,
+    val etag: String,
+    val id: Id,
+    val snippet: VideoSnippet, //에서 channelId, channelTitle, title, description, thumbnails
+    val contentDetails: VideoContentDetails,
+)
 
 data class Id(
     val kind: String,
