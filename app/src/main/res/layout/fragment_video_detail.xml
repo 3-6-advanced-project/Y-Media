@@ -37,6 +37,7 @@
             android:layout_height="wrap_content"
             app:cardCornerRadius="@dimen/default_horizontal_margin12">
             <ImageView
+                android:id="@+id/iv_thumbnail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
@@ -89,6 +90,7 @@
             android:orientation="vertical"
             android:gravity="center_vertical">
             <TextView
+                android:id="@+id/tv_channel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="영상 올린 채널 이름"
@@ -96,6 +98,7 @@
                 android:layout_marginLeft="@dimen/default_horizontal_margin8"
                 android:textColor="@color/white"/>
             <TextView
+                android:id="@+id/tv_subscribers"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="구독자 수"
@@ -128,6 +131,7 @@
             android:layout_height="match_parent"
             android:padding="12dp">
             <TextView
+                android:id="@+id/tv_description"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="asdfasdfsdfasdfasdfasdasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdfasdfasdfsdfasdffsdfasdf"
