@@ -10,6 +10,7 @@
     <string name="home_fragment_category_videos_text">Category Videos</string>
     <string name="home_fragment_category_channels_text">Category Channels</string>
 
+    <string name="search_fragment_search_no_results_text">No results were found for your search</string>
     <string name="search_fragment_search_results_text">Search Results</string>
     <string name="search_fragment_search_edit_text_hint">Search</string>
 
