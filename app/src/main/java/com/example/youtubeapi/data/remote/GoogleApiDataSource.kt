@@ -3,6 +3,7 @@ package com.example.youtubeapi.data.remote
 import com.example.youtubeapi.BuildConfig
 import com.example.youtubeapi.data.model.dto.HomeVideo
 import com.example.youtubeapi.data.model.dto.SearchVideo
+import com.example.youtubeapi.data.model.dto.VideoById
 import com.example.youtubeapi.data.model.dto.VideoResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -66,4 +67,11 @@ interface GoogleApiDataSource {
         // @Query("relevanceLanguage") relevanceLanguage: String = "KR", // 지정된 언어와 가장 관련성이 높은 검색결과를 반환
 
     ): VideoResponse<SearchVideo>
+
+    @GET("youtube/v3/videos")
+    suspend fun getVideoById(
+        @Query("key") key: String = BuildConfig.GOOGLE_API_KEY,
+        @Query("id") id: String,
+        @Query("maxResults") maxResults: Int
+    ): VideoResponse<VideoById>
 }
