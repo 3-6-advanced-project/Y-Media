@@ -11,8 +11,10 @@ import kotlinx.coroutines.flow.Flow
 interface VideoEntityDao {
     @Query("SELECT * FROM VideoEntity")
     fun getAllVideoEntity(): Flow<List<VideoEntity>>
+
     @Delete
     fun deleteVideoEntity(videoEntity: VideoEntity)
+
     @Insert
     fun insertVideoEntity(videoEntity: VideoEntity): Long
 }

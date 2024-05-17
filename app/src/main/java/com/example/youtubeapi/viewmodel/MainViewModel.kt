@@ -9,15 +9,11 @@ import com.example.youtubeapi.data.model.entity.VideoEntity
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
-import com.example.youtubeapi.data.model.dto.VideoResponse
 import com.example.youtubeapi.data.repository.VideoRepository
 import com.example.youtubeapi.network.RetrofitClient
 import com.example.youtubeapi.presentation.uistate.VideoState
 import com.example.youtubeapi.presentation.uistate.asVideoState
-import kotlinx.coroutines.flow.StateFlow
-
 
 // Represents different states for the LatestNews screen
 sealed interface LatestNewsUiState {
@@ -29,11 +25,8 @@ class MainViewModel(
     private val videoEntityDao: VideoEntityDao,
     private val videoRepository: VideoRepository,
 ) : ViewModel() {
-    // Backing property to avoid state updates from other classes
-    private val _uiState: MutableStateFlow<LatestNewsUiState> =
-        MutableStateFlow(LatestNewsUiState.Success(emptyList()))
-    // The UI collects from this StateFlow to get its state updates
-    val uiState: StateFlow<LatestNewsUiState> = _uiState
+    private val _uiState: MutableStateFlow<LatestNewsUiState> = MutableStateFlow(LatestNewsUiState.Success(emptyList()))
+    val uiState = _uiState.asStateFlow()
 
     private val _bookmarks = MutableStateFlow(listOf<VideoEntity>())
     val bookmarks = _bookmarks.asStateFlow()

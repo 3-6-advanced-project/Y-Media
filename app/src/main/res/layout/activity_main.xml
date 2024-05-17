@@ -1,37 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+    android:id="@+id/fl"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".presentation.MainActivity">
 
-
-
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/vp"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_tabs"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_height="match_parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/tl"/>
-
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tl"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
-        android:backgroundTint="@color/almost_black"
-        app:tabIconTint="@drawable/selected_tab_color"
-        app:tabIndicatorColor="@color/white"
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/vp"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/tl">
+        </androidx.viewpager2.widget.ViewPager2>
 
-        app:tabRippleColor="@color/whitish_grey"
-        app:tabSelectedTextColor="@color/white"
-        app:tabTextColor="@color/whitish_grey" />
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            android:backgroundTint="@color/almost_black"
+            app:tabIconTint="@drawable/selected_tab_color"
+            app:tabIndicatorColor="@color/white"
+
+            app:tabRippleColor="@color/whitish_grey"
+            app:tabSelectedTextColor="@color/white"
+            app:tabTextColor="@color/whitish_grey">
+        </com.google.android.material.tabs.TabLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</FrameLayout>
