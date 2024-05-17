@@ -1,5 +1,6 @@
 package com.example.youtubeapi.data.model.entity
 
+import androidx.room.ColumnInfo
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -10,7 +11,9 @@ import com.example.youtubeapi.data.model.dto.Thumbnail
 @Entity
 data class VideoEntity(
     @PrimaryKey(autoGenerate = true) val rowId: Long,
+    @ColumnInfo(defaultValue = "")
     val kind: String,
+    @ColumnInfo(defaultValue = "")
     val etag: String,
     val videoId: String,
     val title: String,
@@ -18,7 +21,8 @@ data class VideoEntity(
     val channelTitle: String,
     val channelId: String,
     val publishedAt: String,
+    @ColumnInfo(defaultValue = "")
     val publishTime: String,
     val duration: String,
-    @Embedded val thumbnail: Thumbnail
+    val thumbnailUrl: String,
 )
