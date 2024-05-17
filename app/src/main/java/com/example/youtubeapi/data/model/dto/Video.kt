@@ -27,7 +27,7 @@ data class VideoSnippet(
     val description: String,
     val thumbnails: Thumbnails,
     val channelTitle: String,
-    val categoryId: String
+    val categoryId: String,
 )
 
 data class VideoContentDetails(
@@ -39,7 +39,7 @@ data class VideoContentDetails(
 data class Thumbnails(
     val default: Thumbnail,
     val medium: Thumbnail,
-    val high: Thumbnail
+    val high: Thumbnail,
 )
 
 data class Thumbnail(
