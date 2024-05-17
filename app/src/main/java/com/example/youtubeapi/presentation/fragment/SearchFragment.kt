@@ -17,7 +17,6 @@ import com.example.youtubeapi.adapter.SearchListAdapter
 import com.example.youtubeapi.data.local.AppDatabase
 import com.example.youtubeapi.databinding.FragmentSearchBinding
 import com.example.youtubeapi.presentation.adapter.SearchFilterAdapter
-import com.example.youtubeapi.presentation.adapter.TypeItem
 import com.example.youtubeapi.presentation.adapter.decoration.ListItemDecoration
 import com.example.youtubeapi.viewmodel.LatestNewsUiState
 import com.example.youtubeapi.viewmodel.MainViewModel
@@ -84,12 +83,7 @@ class SearchFragment : Fragment() {
 
     private fun initFilterItems() = with(binding.rvSearchFilter) {
         adapter = SearchFilterAdapter(
-            mutableListOf(
-                TypeItem("Any"),
-                TypeItem("Less than 4 minutes"),
-                TypeItem("4 to 20 minutes"),
-                TypeItem("more than 20 minutes"),
-            )
+            listOf("Any", "Less than 4 minutes", "4 to 20 minutes", "more than 20 minutes")
         )
 
         addItemDecoration(
