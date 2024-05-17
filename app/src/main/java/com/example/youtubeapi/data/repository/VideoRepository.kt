@@ -32,10 +32,8 @@ class VideoRepository(
 
     suspend fun getVideoById(
         videoId: String,
-        @IntRange(from = 1, to = 1) maxResults: Int = 1,
     ) = googleApiDataSource.getVideoById(
-        id = videoId,
-        maxResults = maxResults
+        id = videoId
     )
 
 //    suspend fun getChannelById(
