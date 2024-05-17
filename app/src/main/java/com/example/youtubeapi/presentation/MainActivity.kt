@@ -32,11 +32,11 @@ class MainActivity : AppCompatActivity() {
                         tab.text = HomeFragment_TAG
                     }
                     1 -> {
-                        tab.setIcon(R.drawable.selector_likes)
+                        tab.setIcon(R.drawable.selector_search)
                         tab.text = SearchFragment_TAG
                     }
                     2 -> {
-                        tab.setIcon(R.drawable.selector_search)
+                        tab.setIcon(R.drawable.selector_likes)
                         tab.text = MyVideoFragment_TAG
                     }
                 }
