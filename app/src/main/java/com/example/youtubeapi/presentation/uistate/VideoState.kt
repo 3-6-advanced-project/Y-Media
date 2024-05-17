@@ -23,7 +23,7 @@ fun HomeVideo.asVideoState() = VideoState(
     title = snippet.title,
     description = snippet.description,
     channelTitle = snippet.channelTitle,
-    thumbnail = snippet.thumbnails.default,
+    thumbnail = snippet.thumbnails.high,
     duration = contentDetails.duration,
     categoryId = snippet.categoryId,
     publishedAt = snippet.publishedAt
@@ -34,6 +34,6 @@ fun SearchVideo.asVideoState() = VideoState(
     title = snippet.title,
     description = snippet.description,
     channelTitle = snippet.channelTitle,
-    thumbnail = snippet.thumbnails.default,
+    thumbnail = snippet.thumbnails.high,
     publishedAt = snippet.publishedAt
 )
