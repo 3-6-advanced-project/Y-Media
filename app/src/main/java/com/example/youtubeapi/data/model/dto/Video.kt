@@ -21,7 +21,7 @@ data class VideoById(
     val etag: String,
     val id: String,
     val snippet: VideoSnippet, //에서 channelId, channelTitle, title, description, thumbnails
-    val contentDetails: VideoContentDetails,
+    val contentDetails: VideoContentDetails, //영상 시간
 )
 
 //data class ChannelByVideoId(
