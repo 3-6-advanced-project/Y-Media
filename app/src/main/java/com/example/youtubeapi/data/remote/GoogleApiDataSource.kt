@@ -1,6 +1,7 @@
 package com.example.youtubeapi.data.remote
 
 import com.example.youtubeapi.BuildConfig
+import com.example.youtubeapi.data.model.dto.ChannelsResponse
 import com.example.youtubeapi.data.model.dto.VideoResponse
 import com.example.youtubeapi.data.model.dto.HomeVideo
 import com.example.youtubeapi.data.model.dto.SearchVideo
@@ -81,5 +82,5 @@ interface GoogleApiDataSource {
         @Query("key") key: String = BuildConfig.GOOGLE_API_KEY,
         @Query("part") part: String = "snippet",
         @Query("id") id: String
-    ): VideoCategoryResponse
+    ): ChannelsResponse
 }
