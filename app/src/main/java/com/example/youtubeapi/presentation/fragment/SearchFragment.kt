@@ -13,6 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.youtubeapi.R
 import com.example.youtubeapi.adapter.SearchListAdapter
+import com.example.youtubeapi.data.local.AppDatabase
 import com.example.youtubeapi.databinding.FragmentSearchBinding
 import com.example.youtubeapi.presentation.adapter.decoration.ListItemDecoration
 import com.example.youtubeapi.viewmodel.LatestNewsUiState
@@ -23,8 +24,10 @@ import kotlinx.coroutines.launch
 class SearchFragment : Fragment() {
     private val binding by lazy { FragmentSearchBinding.inflate(layoutInflater) }
 
+    private val db by lazy { AppDatabase.getInstance(requireContext())!! }
+
     private val viewModel: MainViewModel by activityViewModels() {
-        MainViewModelFactory()
+        MainViewModelFactory(db.videoDao())
     }
 
     private val searchListAdapter = SearchListAdapter() { video ->
