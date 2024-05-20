@@ -11,10 +11,13 @@ import androidx.lifecycle.lifecycleScope
 import coil.load
 import com.example.youtubeapi.R
 import com.example.youtubeapi.data.local.AppDatabase
+import com.example.youtubeapi.data.local.dao.VideoEntityDao
+import com.example.youtubeapi.data.model.entity.VideoEntity
 import com.example.youtubeapi.databinding.FragmentVideoDetailBinding
 import com.example.youtubeapi.viewmodel.LatestNewsUiState
 import com.example.youtubeapi.viewmodel.MainViewModel
 import com.example.youtubeapi.viewmodel.MainViewModelFactory
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
 class VideoDetailFragment : Fragment() {
@@ -24,6 +27,7 @@ class VideoDetailFragment : Fragment() {
     private val viewModel: MainViewModel by activityViewModels { //뷰모델 초기화 시 입력값 설정이 없어서 생긴 문제.
         MainViewModelFactory(db.videoDao())
     }
+    private val videoId = "vRheHVDYpcY" //나중에는 다른 fragment에서 보낸 정보를 여기 연결.
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,16 +44,22 @@ class VideoDetailFragment : Fragment() {
         }
 
         binding.btVideo1Test.setOnClickListener {
-            val videoId = "vRheHVDYpcY"
             viewModel.onDetail(videoId)
-            //binding.llThumbnail = ... 전달받은 thumbnail 사진과 연결
         }
 
         binding.ivLikesButton.setOnClickListener{
             //좋아요가 이미 눌려진 영상인지 판정하기
             val isVideoLiked = false //실제론 ROOM에서 들고옴
 
-
+            db.videoDao().insertVideoEntityWithParameters(
+                videoId = videoId,
+                title = "",
+                description = "",
+                channelTitle = "",
+                channelId = "",
+                publishedAt = "",
+                duration = "",
+                thumbnailUrl = "")
         }
 
     }
@@ -78,7 +88,8 @@ class VideoDetailFragment : Fragment() {
     }
 
     private fun initRVItem() = with(binding) {
-
-
     }
+
+
 }
+
