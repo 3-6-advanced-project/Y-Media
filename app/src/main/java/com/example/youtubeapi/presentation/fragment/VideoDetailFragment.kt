@@ -48,11 +48,9 @@ class VideoDetailFragment : Fragment() {
 
         binding.btVideo1Test.setOnClickListener {
             viewModel.onDetail(videoId)
-            savedLikes(videoId)
         }
 
         binding.ivLikesButton.setOnClickListener {
-            binding.ivLikesButton.setImageResource(R.drawable.ic_likes)
             savedLikes(videoId)
         }
 
@@ -72,7 +70,7 @@ class VideoDetailFragment : Fragment() {
                         binding.tvTitle.text = videoStates[0].title
                         binding.tvChannel.text = videoStates[0].channelTitle
                         binding.ivChannelProfile.load(videoStates[0].thumbnail.url) //우선 섬네일 넣어뒀는데 채널 사진으로 바꾸어야 됨. 갖고 올 수 있는 건가???
-                        binding.tvSubscribers.text = "?"
+                        binding.tvSubscribers.text = videoStates[0].channelTitle // 채널 구독자 수 확인하려면 채널 API 사용해야 함.
                         binding.tvDescription.text = videoStates[0].description
                     }
                 }
@@ -92,7 +90,7 @@ class VideoDetailFragment : Fragment() {
                 like.setImageResource(R.drawable.ic_likes)
                 db.videoDao().insertVideoEntityWithParameters(
                     videoId = videoId,
-                    title = "",
+                    title = "hello!",
                     description = "",
                     channelTitle =  "",
                     channelId = "",
