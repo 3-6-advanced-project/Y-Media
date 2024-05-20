@@ -46,15 +46,15 @@ class VideoDetailFragment : Fragment() {
         initViewModel() //데이터 바뀔때 자동 호출됨. coroutine
 
         val videoId = videoId.toString() //나중에는 다른 fragment에서 보낸 정보를 여기 연결.
-        Log.d("video id id id", videoId)
-        //뒤로가기 버튼을 누르면 VideoDetailFragment가 사라지게 처리되고, 하단 탭 작동이 됨.
-        binding.ivBackButton.setOnClickListener{
-            binding.cl.visibility = android.view.View.GONE
-        }
+        Log.d("video id: onViewCreated 처음 출력", videoId)
+
+        checkVideoIcon(videoId)
+        Log.d("video id: db에 존재하는지 여부 체크 직후", videoId)
 
         //arguments에서 가져온 videoId로 화면 정보 갱신
         viewModel.onDetail(videoId!!)
-        Log.d("video id id id2", videoId)
+        Log.d("video id: viewModel.onDetail에 잘 들어왔는지", videoId)
+
 
         binding.ivLikesButton.setOnClickListener {
             savedLikes(videoId!!) //좋아요가 저장되어있는지 확인하고, 없으면
@@ -101,6 +101,14 @@ class VideoDetailFragment : Fragment() {
     private fun initRVItem() = with(binding) {
     }
 
+    private fun checkVideoIcon(videoId: String) = lifecycleScope.launch() {
+        withContext(Dispatchers.IO) {
+            val like = binding.ivLikesButton
+            if (!db.videoDao().isThisVideoExists(videoId)) {
+                like.setImageResource(R.drawable.ic_likes)
+            }
+        }
+    }
     private fun savedLikes(videoId: String) = lifecycleScope.launch() { //https://velog.io/@jeongminji4490/Error-cannot-access-database-on-main-thread-LifecycleScope
         withContext(Dispatchers.IO){
             val like = binding.ivLikesButton
