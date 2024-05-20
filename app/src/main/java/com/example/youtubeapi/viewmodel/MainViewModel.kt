@@ -82,7 +82,9 @@ class MainViewModel(
     private fun initBookmarks() {
         viewModelScope.launch {
             videoEntityDao.getAllVideoEntity().collect {
-                _bookmarks.value = it
+                Log.e("URGENT_TAG", "initBookmarks: called!")
+                val temp = it.toList()
+                _bookmarks.value = temp
             }
         }
     }

@@ -1,6 +1,7 @@
 package com.example.youtubeapi.presentation.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.youtubeapi.R
 import com.example.youtubeapi.adapter.MyVideoAdapter
 import com.example.youtubeapi.data.local.AppDatabase
@@ -25,9 +27,10 @@ class MyVideoFragment : Fragment() {
         MainViewModelFactory(db.videoDao())
     }
 
-    private val bookmarks = dummyData
-    private val adapter = MyVideoAdapter(bookmarks) { videoId ->
-        showDetailFragment(videoId)
+    private val mAdapter by lazy {
+        MyVideoAdapter { videoId ->
+            showDetailFragment(videoId)
+        }
     }
 
     override fun onCreateView(
@@ -40,12 +43,13 @@ class MyVideoFragment : Fragment() {
 
         binding.mvRvLiked.apply {
             layoutManager = GridLayoutManager(activity, 2)
-            this.adapter = adapter
+            this.adapter = mAdapter
         }
 
         lifecycleScope.launch {
             viewModel.bookmarks.collect {
-                adapter.updateItems(it)
+                Log.e("URGENT_TAG", "MyVideoFragment: onViewCreated: called")
+                mAdapter.updateItems(it)
             }
         }
 
