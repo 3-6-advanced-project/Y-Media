@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import com.example.youtubeapi.data.model.VideoEntity
+import com.example.youtubeapi.data.model.entity.VideoEntity
 import com.example.youtubeapi.databinding.ItemsGridBinding
 
 class MyVideoAdapter(val myVideo: MutableList<VideoEntity>) : RecyclerView.Adapter<MyVideoAdapter.ViewHolder>() {
@@ -14,9 +14,9 @@ class MyVideoAdapter(val myVideo: MutableList<VideoEntity>) : RecyclerView.Adapt
         return ViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: VideoViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val dataSet = myVideo[position]
-        holder.thumbnail.load(dataSet.thumbnail.url)
+        holder.thumbnail.load(dataSet.thumbnailUrl)
         holder.duration.text = dataSet.duration
         holder.title.text = dataSet.title
         holder.channel.text = dataSet.channelTitle
