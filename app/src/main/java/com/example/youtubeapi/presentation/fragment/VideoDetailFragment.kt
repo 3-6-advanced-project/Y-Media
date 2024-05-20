@@ -57,10 +57,10 @@ class VideoDetailFragment : Fragment() {
     }
 
     private fun initViewModel() = lifecycleScope.launch { //변화 감지 갱신
-        viewModel.uiState.collect { uiState ->
-            when (uiState) {
+        viewModel.uiDetailState.collect { uiDetailState ->
+            when (uiDetailState) {
                 is LatestNewsUiState.Success -> {
-                    val videoStates = uiState.videoStates //thumbnail
+                    val videoStates = uiDetailState.videoStates //thumbnail
 
                     if(videoStates.isNotEmpty()) { //viewModel 완전 초기값... 비어있어 인덱스 오류?
                         binding.ivThumbnail.load(videoStates[0].thumbnail.url){ //glide나 [coil]로 웹 이미지 로드

@@ -28,6 +28,10 @@ class MainViewModel(
     private val _uiState: MutableStateFlow<LatestNewsUiState> = MutableStateFlow(LatestNewsUiState.Success(emptyList()))
     val uiState = _uiState.asStateFlow()
 
+    //디테일 페이지로 이동 시 Search 결과 연결 + 0번으로만 이동해서 분리.
+    private val _uiDetailState: MutableStateFlow<LatestNewsUiState> = MutableStateFlow(LatestNewsUiState.Success(emptyList()))
+    val uiDetailState = _uiDetailState.asStateFlow()
+
     private val _bookmarks = MutableStateFlow(listOf<VideoEntity>())
     val bookmarks = _bookmarks.asStateFlow()
 
