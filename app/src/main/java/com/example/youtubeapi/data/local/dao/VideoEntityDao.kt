@@ -27,4 +27,9 @@ interface VideoEntityDao {
         duration: String,
         thumbnailUrl: String
     ): Long
+
+    //ROOM에 해당하는 값 있는지 확인하는 함수를 추가 작성함.
+    // 참고한 자료: https://stackoverflow.com/questions/60585796/how-do-i-check-if-theres-a-certain-item-in-database-when-using-room-in-android
+    @Query("SELECT EXISTS (SELECT 1 FROM VideoEntity WHERE videoId = :videoId)")
+    fun isThisVideoExists(videoId: String): Boolean
 }
