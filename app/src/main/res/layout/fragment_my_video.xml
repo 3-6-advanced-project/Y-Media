@@ -1,14 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#232323"
     tools:context=".presentation.fragment.MyVideoFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
-</FrameLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraint"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="15dp"
+            android:background="@drawable/mv_profile_rec">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardview"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
+                app:cardCornerRadius="50dp"
+                app:cardElevation="0dp"
+                app:layout_constraintStart_toStartOf="@id/constraint"
+                app:layout_constraintTop_toTopOf="@id/constraint">
+
+                <ImageView
+                    android:id="@+id/mv_iv_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/mv_profile_picture" />
+
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="다니엘 마쉬"
+                android:textColor="@color/white"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@id/cardview"
+                app:layout_constraintTop_toTopOf="@id/cardview"
+                app:layout_constraintBottom_toTopOf="@id/user_email"
+                android:layout_marginLeft="10dp" />
+
+            <TextView
+                android:id="@+id/user_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="june5411@youflix.com"
+                android:textColor="@color/white"
+                app:layout_constraintStart_toEndOf="@id/cardview"
+                app:layout_constraintBottom_toBottomOf="@id/cardview"
+                app:layout_constraintTop_toBottomOf="@id/username"
+                android:layout_marginLeft="10dp"/>
+
+            <View
+                android:id="@+id/view"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/mv_profile_view"
+                app:layout_constraintTop_toBottomOf="@id/cardview"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="35dp"
+                android:text="한국 호주 혼혈이에요. 노래와 춤에 관심이 많아서 K-Pop을 자주 봐요. 귀여운 동물 동영상도 좋아해요!"
+                android:maxLines="2"
+                android:textColor="@color/white"
+                android:textSize="15dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/view"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/mv_tv_liked"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:text="좋아하는 동영상"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:gravity="center"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/mv_rv_liked"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_marginBottom="15dp"/>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
