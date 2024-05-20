@@ -1,8 +1,13 @@
 package com.example.youtubeapi.presentation.fragment
 
 import android.os.Bundle
+import android.view.ContextMenu
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.MenuItem.OnMenuItemClickListener
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
@@ -10,6 +15,8 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.youtubeapi.R
+import com.example.youtubeapi.data.local.AppDatabase
 import com.example.youtubeapi.data.model.dto.Channel
 import com.example.youtubeapi.databinding.FragmentHomeBinding
 import com.example.youtubeapi.presentation.adapter.ChannelClickListener
@@ -25,9 +32,10 @@ import kotlinx.coroutines.launch
 class HomeFragment : Fragment(), VideoClickListener, ChannelClickListener {
 
     private val binding by lazy { FragmentHomeBinding.inflate(layoutInflater) }
+    private val db by lazy { AppDatabase.getInstance(requireContext())!! }
 
     private val viewModel: MainViewModel by activityViewModels {
-        MainViewModelFactory()
+        MainViewModelFactory(db.videoDao())
     }
 
     private val mostPopularVideoAdapter by lazy { HomeVideoRecyclerViewAdapter(this) }
@@ -114,4 +122,10 @@ class HomeFragment : Fragment(), VideoClickListener, ChannelClickListener {
     override fun onChannelClick(channel: Channel) {
 
     }
+//    private fun showDetailFragment(videoId: String) {
+//        requireActivity().supportFragmentManager.beginTransaction()
+//            .replace(R.id.fl, VideoDetailFragment())
+//            .addToBackStack(null)
+//            .commit()
+//    }
 }

@@ -85,6 +85,7 @@ class MainViewModel(
     private fun initMostPopularVideos() {
         viewModelScope.launch(Dispatchers.IO) {
             _mostPopularVideos.value = videoRepository.getMostPopularVideo().items.map {
+                Log.e("TAG", "initMostPopularVideos: $it", )
                 it.asVideoState()
             }
         }
