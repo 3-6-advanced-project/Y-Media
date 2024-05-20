@@ -15,17 +15,16 @@ class MainActivity : AppCompatActivity() {
 
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
         initView()
-
     }
 
     private fun initView() {
         with(binding) {
+            vp.isUserInputEnabled = false
             vp.adapter = ViewPagerAdapter(this@MainActivity)
             TabLayoutMediator(tl, vp) { tab, position ->
                 when (position) {

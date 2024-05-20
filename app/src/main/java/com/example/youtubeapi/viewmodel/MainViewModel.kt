@@ -67,7 +67,6 @@ class MainViewModel(
     private fun initMostPopularVideos() {
         viewModelScope.launch(Dispatchers.IO) {
             _mostPopularVideos.value = videoRepository.getMostPopularVideo().items.map {
-                Log.e("TAG", "initMostPopularVideos: $it", )
                 it.asVideoState()
             }
         }
@@ -98,7 +97,8 @@ class MainViewModel(
             _mostPopularVideosWithCategory.value = temp.map { it.asVideoState() }
             _channels.value = videoRepository
                 .getChannels(extractChannelIdStringFromVideos(temp)).items
-
+        }
+    }
     fun onSearch(
         query: String,
         videoDuration: String
@@ -122,7 +122,7 @@ class MainViewModel(
             Log.e("Api Call Error", it.message.toString())
         }
     }
-          
+
     // Gson converter = dto 만들어서 class로 변환...
     fun onDetail(videoId: String) = viewModelScope.launch{
         runCatching {
@@ -158,4 +158,3 @@ class MainViewModelFactory(
         repository
     ) as T
 }
-
