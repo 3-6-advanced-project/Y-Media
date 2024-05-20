@@ -1,13 +1,8 @@
 package com.example.youtubeapi.presentation.fragment
 
 import android.os.Bundle
-import android.view.ContextMenu
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import android.view.MenuItem.OnMenuItemClickListener
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
@@ -15,7 +10,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.youtubeapi.data.local.AppDatabase
 import com.example.youtubeapi.data.model.dto.Channel
 import com.example.youtubeapi.databinding.FragmentHomeBinding
 import com.example.youtubeapi.presentation.adapter.ChannelClickListener

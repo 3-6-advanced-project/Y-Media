@@ -1,12 +1,11 @@
 package com.example.youtubeapi.presentation.fragment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import com.example.youtubeapi.R
 import com.example.youtubeapi.databinding.FragmentVideoDetailBinding
 import com.example.youtubeapi.viewmodel.MainViewModel
 
@@ -26,5 +25,13 @@ class VideoDetailFragment : Fragment() {
         /**
          *
          * */
+        binding.btVideo1Test.setOnClickListener {
+            val videoId = "vRheHVDYpcY"
+            binding.btVideo1Test.text = videoId
+        }
+        binding.btVideo2Test.setOnClickListener {
+            val videoId = "gEV8T3541j8"
+            binding.btVideo2Test.text = videoId
+        }
     }
 }
