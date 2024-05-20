@@ -3,6 +3,7 @@ package com.example.youtubeapi.data.remote
 import com.example.youtubeapi.BuildConfig
 import com.example.youtubeapi.data.model.dto.HomeVideo
 import com.example.youtubeapi.data.model.dto.SearchVideo
+import com.example.youtubeapi.data.model.dto.VideoById
 import com.example.youtubeapi.data.model.dto.VideoResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -48,4 +49,21 @@ interface GoogleApiDataSource {
         @Query("regionCode") regionCode: String = "KR",
         @Query("relevanceLanguage") relevanceLanguage: String = "ko",
     ): VideoResponse<SearchVideo>
+
+    @GET("youtube/v3/videos")
+    suspend fun getVideoById(
+        @Query("key") key: String = BuildConfig.GOOGLE_API_KEY,
+        @Query("id") id: String,
+        @Query("part") part: String = "snippet"
+    ): VideoResponse<VideoById>
+
+//    //https://developers.google.com/youtube/v3/docs/channels/list
+//    @GET("youtube/v3/channels")
+//    suspend fun getChannelById(
+//        @Query("key") key: String = BuildConfig.GOOGLE_API_KEY,
+//        @Query("id") id: String, //영상 id인 듯!
+//        @Query("snippet") part: String = "thumbnails", //
+//        @Query("statistics") statistics: String = "subscriberCount",
+//        @Query("maxResults") maxResults: Int
+//    ): VideoResponse<VideoById>
 }

@@ -88,8 +88,9 @@ class SearchFragment : Fragment() {
 
     private fun showDetailFragment(videoId: String) {
         // TODO : VideoDetailFragment.newInstance(videoId)로 수정 필요
+        val detailFragment = VideoDetailFragment.newInstance(videoId)
         requireActivity().supportFragmentManager.beginTransaction()
-            .replace(R.id.fl, VideoDetailFragment())
+            .replace(R.id.fl, detailFragment)
             .addToBackStack(null)
             .commit()
     }

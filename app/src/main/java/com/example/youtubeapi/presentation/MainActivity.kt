@@ -8,6 +8,7 @@ import com.example.youtubeapi.R
 import com.example.youtubeapi.SearchFragment_TAG
 import com.example.youtubeapi.databinding.ActivityMainBinding
 import com.example.youtubeapi.presentation.adapter.ViewPagerAdapter
+import com.example.youtubeapi.presentation.fragment.VideoDetailFragment
 import com.google.android.material.tabs.TabLayoutMediator
 
 class MainActivity : AppCompatActivity() {
@@ -20,6 +21,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         initView()
+
     }
 
     private fun initView() {
