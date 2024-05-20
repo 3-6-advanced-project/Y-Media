@@ -27,7 +27,7 @@ class VideoDetailFragment : Fragment() {
     private val viewModel: MainViewModel by activityViewModels { //뷰모델 초기화 시 입력값 설정이 없어서 생긴 문제.
         MainViewModelFactory(db.videoDao())
     }
-    private val videoId = "vRheHVDYpcY" //나중에는 다른 fragment에서 보낸 정보를 여기 연결.
+    private val videoId = "Sg95nokmww8" //나중에는 다른 fragment에서 보낸 정보를 여기 연결.
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,24 +45,24 @@ class VideoDetailFragment : Fragment() {
 
         binding.btVideo1Test.setOnClickListener {
             viewModel.onDetail(videoId)
-        }
 
-        val like = binding.ivLikesButton
-        if (db.videoDao().isThisVideoExists(videoId)) { //db에 해당  videoId를 가진 영상이 없는 경우. 추가.
-            like.setImageResource(R.drawable.ic_likes)
-            db.videoDao().insertVideoEntityWithParameters(
+            val like = binding.ivLikesButton
+            if (db.videoDao().isThisVideoExists(videoId)) { //db에 해당  videoId를 가진 영상이 없는 경우. 추가.
+                like.setImageResource(R.drawable.ic_likes)
+                db.videoDao().insertVideoEntityWithParameters(
                 videoId = videoId,
-                title = "",
+                title = "집중력과 인내심이 필요한 장난감 #shorts",
                 description = "",
-                channelTitle = "",
-                channelId = "",
-                publishedAt = "",
-                duration = "",
-                thumbnailUrl = "")
-        }
-        else { //db에 해당 videoId를 가진 영상이 있는 경우. 제외.
-            like.setImageResource(R.drawable.ic_likes_outline)
-            db.videoDao().deleteVideoEntityById(videoId = videoId)
+                channelTitle =  "신사장",
+                channelId = "UCdyeqVNyJehPmKBEJ520rhg",
+                publishedAt = "2022-03-13T02:12:08Z",
+                duration = "PT23M24S",
+                thumbnailUrl = "https://i.ytimg.com/vi/Sg95nokmww8/hqdefault.jpg")
+            }
+            else { //db에 해당 videoId를 가진 영상이 있는 경우. 제외.
+                like.setImageResource(R.drawable.ic_likes_outline)
+                db.videoDao().deleteVideoEntityById(videoId = videoId)
+            }
         }
     }
 
