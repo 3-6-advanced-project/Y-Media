@@ -49,7 +49,11 @@ class SearchFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ) = binding.root
+    ): View {
+        loadData() // 데이터 가져오기
+
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -58,6 +62,28 @@ class SearchFragment : Fragment() {
         initFilterItems()
         initVideoItems()
         initViewModel()
+    }
+
+    // 데이터 가져오기
+    private fun loadData() {
+        val pref = activity.let {
+            it!!.getSharedPreferences("Data", 0)
+        }
+
+        val keyword = pref.getString("keyword", "")!!
+        binding.etSearchKeyword.setText(keyword)
+    }
+
+    // 데이터 저장하기
+    private fun saveData() {
+        val pref = requireActivity().let {
+            it!!.getSharedPreferences("Data", 0)
+        }
+
+        pref.edit().apply {
+            putString("keyword", binding.etSearchKeyword.text.toString())
+            apply()
+        }
     }
 
     private fun showDetailFragment(videoId: String) {
@@ -83,6 +109,8 @@ class SearchFragment : Fragment() {
                 query = etSearchKeyword.text.toString(),
                 videoDuration = filterTypes[searchFilterAdapter.currentSelectPosition]
             )
+
+            saveData()
 
             true
         }
