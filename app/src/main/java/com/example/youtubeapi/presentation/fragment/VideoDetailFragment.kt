@@ -51,7 +51,7 @@ class VideoDetailFragment : Fragment() {
         }
 
         binding.ivLikesButton.setOnClickListener {
-            savedLikes(videoId)
+            savedLikes(videoId) //좋아요가 저장되어있는지 확인하고, 없으면
         }
 
     }
