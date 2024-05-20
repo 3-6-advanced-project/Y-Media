@@ -77,10 +77,10 @@ class MainViewModel(
             Log.d("test 1", "1")
             val videoState = videos.items.map { it.asVideoState() } //이 코드는 뭐 하는 거지? 각 비디오 (지금은 1개)내 정렬?
             Log.d("test 2", "2")
-            _uiState.value = LatestNewsUiState.Success(videoState) //이해못함 > uistate값을 ui 띄울때 불러와야됨
+            _uiDetailState.value = LatestNewsUiState.Success(videoState) //이해못함 > _uiDetailState값을 ui 띄울때 불러와야됨
             Log.d("Api Call Success", videoState.toString())
         }.onFailure {
-            _uiState.value = LatestNewsUiState.Error(it)
+            _uiDetailState.value = LatestNewsUiState.Error(it)
             Log.e("Api Call Error", it.message.toString())
         }
     }
