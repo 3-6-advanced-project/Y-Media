@@ -22,9 +22,6 @@ class MainActivity : AppCompatActivity() {
 
         initView()
 
-        //테스트용으로 detailFragment와 연결함
-        supportFragmentManager.beginTransaction().replace(R.id.fl, VideoDetailFragment()).commit()
-
     }
 
     private fun initView() {
