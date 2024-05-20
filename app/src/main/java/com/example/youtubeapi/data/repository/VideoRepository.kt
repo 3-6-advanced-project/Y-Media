@@ -29,10 +29,12 @@ class VideoRepository(
 
     suspend fun getSearchVideo(
         query: String,
+        videoDuration: String = "any",
         @IntRange(from = 1, to = 50) maxResults: Int = 50,
         videoDefinition: String = "high",
     ) = googleApiDataSource.getSearchVideo(
         query = query,
+        videoDuration = videoDuration,
         maxResults = maxResults,
         videoDefinition = videoDefinition,
     )
