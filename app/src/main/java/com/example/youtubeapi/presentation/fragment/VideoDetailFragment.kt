@@ -127,7 +127,7 @@ class VideoDetailFragment : Fragment() {
                     channelId = "",
                     publishedAt = "",
                     duration = "",
-                    thumbnailUrl = "")
+                    thumbnailUrl = "") //TODO
             }
             else { //db에 해당 videoId를 가진 영상이 있는 경우. 제외.
                 like.setImageResource(R.drawable.ic_likes_outline)
