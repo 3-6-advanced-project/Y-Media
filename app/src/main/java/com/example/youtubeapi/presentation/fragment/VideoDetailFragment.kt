@@ -45,6 +45,10 @@ class VideoDetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initViewModel() //데이터 바뀔때 자동 호출됨. coroutine
 
+        binding.ivBackButton.setOnClickListener{
+            binding.cl.visibility = android.view.View.GONE
+        }
+
         val videoId = videoId.toString() //나중에는 다른 fragment에서 보낸 정보를 여기 연결.
         Log.d("video id: onViewCreated 처음 출력", videoId)
 
