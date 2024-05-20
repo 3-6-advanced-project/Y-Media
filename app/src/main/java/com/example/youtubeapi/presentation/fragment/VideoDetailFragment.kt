@@ -109,9 +109,9 @@ class VideoDetailFragment : Fragment() {
                 like.setImageResource(R.drawable.ic_likes)
                 db.videoDao().insertVideoEntityWithParameters(
                     videoId = videoId,
-                    title = "hello!",
-                    description = "",
-                    channelTitle =  "",
+                    title = binding.tvTitle.text.toString(),
+                    description = binding.tvDescription.text.toString(),
+                    channelTitle =  binding.tvChannel.text.toString(),
                     channelId = "",
                     publishedAt = "",
                     duration = "",
