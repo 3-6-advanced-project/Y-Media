@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="16dp"
+    android:paddingTop="@dimen/default_horizontal_margin16"
     android:background="@color/almost_black"
     tools:context=".presentation.fragment.SearchFragment">
 
@@ -30,7 +30,7 @@
                 android:id="@+id/iv_search_icon"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:src="@drawable/ic_search"/>
+                android:src="@drawable/ic_search_inbox"/>
 
             <EditText
                 android:id="@+id/et_search_keyword"
@@ -49,26 +49,51 @@
 
         </LinearLayout>
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_search_filter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginVertical="@dimen/default_horizontal_margin16"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toTopOf="@+id/tv_search_results"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ll_top"
+            tools:listitem="@layout/item_search_filter"/>
+
         <TextView
             android:id="@+id/tv_search_results"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            app:layout_constraintTop_toBottomOf="@id/ll_top"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="@dimen/default_horizontal_margin16"
             android:text="@string/search_fragment_search_results_text"
             android:textSize="18sp"
-            android:textColor="@color/white"/>
+            android:textColor="@color/white"
+            app:layout_constraintTop_toBottomOf="@id/rv_search_filter"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <TextView
+            android:id="@+id/tv_no_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/search_fragment_search_no_results_text"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/rv_search"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/rv_search" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_search"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="@dimen/default_horizontal_margin8"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_search_results"
+            app:layout_constraintTop_toBottomOf="@+id/tv_search_results"
             tools:listitem="@layout/item_search" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

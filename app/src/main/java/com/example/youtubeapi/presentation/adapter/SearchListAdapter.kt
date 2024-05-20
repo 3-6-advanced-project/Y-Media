@@ -2,6 +2,7 @@ package com.example.youtubeapi.adapter
 
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -13,7 +14,7 @@ import com.example.youtubeapi.databinding.ItemSearchBinding
 import com.example.youtubeapi.presentation.uistate.VideoState
 
 class SearchListAdapter(
-    private val onClick: (VideoState) -> Unit,
+    private val onClick: (String) -> Unit,
 ) : ListAdapter<VideoState, SearchListAdapter.ViewHolder>(
 
     // ref: https://developer.android.com/reference/androidx/recyclerview/widget/DiffUtil.ItemCallback#public-constructors_1
@@ -35,10 +36,12 @@ class SearchListAdapter(
 ) {
     inner class ViewHolder(
         private val binding: ItemSearchBinding,
+        onClick: (String) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
         init {
             itemView.setOnClickListener {
-                // TODO: onClick 리스너 추가
+                onClick(getItem(layoutPosition).id)
+                Log.d("videoId Value", getItem(layoutPosition).id)
             }
         }
 
@@ -47,7 +50,6 @@ class SearchListAdapter(
 
             ivVideoThumbnail.load(data.thumbnail.url) {
                 placeholder(R.drawable.ic_search_outline)
-                // transformations(CircleCropTransformation())
             }
 
             tvVideoTitle.text = data.title
@@ -64,12 +66,10 @@ class SearchListAdapter(
             false
         )
 
-        return ViewHolder(binding)
+        return ViewHolder(binding, onClick)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        Log.d("Test", getItem(position).toString())
-
         holder.onBind(position)
     }
 }
