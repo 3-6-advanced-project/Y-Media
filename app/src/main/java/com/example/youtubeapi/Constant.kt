@@ -9,19 +9,18 @@ const val GOOGLE_API_URL_DEVELOP = BuildConfig.GOOGLE_API_URL_DEVELOP
 
 val dummyData = mutableListOf(
     VideoEntity(
-    rowId = 1L,
-    kind = "youtube#channel",
-    etag = "HyrHa3Q1O2Q7MJ9dfdCXINrw5yY",
-    videoId = "vRheHVDYpcY",
-    title = "DANIELLE - 저곳으로 (인어공주) (인어공주 OST)",
-    description = "",
-    channelTitle = "DisneyMusicKoreaVEVO",
-    channelId = "UCCjHwLqUSjxB7NtvUK9fcmw",
-    publishedAt = "2024-03-28T02:25:27Z",
-    publishTime = "2024-03-28T02:25:27Z",
-    duration = "03:37",
-    thumbnail = Thumbnail(
-        url = "https://i1.ytimg.com/vi/ho0d4rf1LwY/sddefault.jpg")),
+        rowId = 1L,
+        kind = "youtube#channel",
+        etag = "HyrHa3Q1O2Q7MJ9dfdCXINrw5yY",
+        videoId = "vRheHVDYpcY",
+        title = "DANIELLE - 저곳으로 (인어공주) (인어공주 OST)",
+        description = "",
+        channelTitle = "DisneyMusicKoreaVEVO",
+        channelId = "UCCjHwLqUSjxB7NtvUK9fcmw",
+        publishedAt = "2024-03-28T02:25:27Z",
+        publishTime = "2024-03-28T02:25:27Z",
+        duration = "03:37",
+        thumbnail = "https://i1.ytimg.com/vi/ho0d4rf1LwY/sddefault.jpg"),
     VideoEntity(
         rowId = 1L,
         kind = "youtube#channel",
@@ -34,8 +33,7 @@ val dummyData = mutableListOf(
         publishedAt = "2024-03-28T02:25:27Z",
         publishTime = "2024-03-28T02:25:27Z",
         duration = "27:16",
-        thumbnail = Thumbnail(
-            url = "https://i1.ytimg.com/vi/oMhrUjdkZRs/sddefault.jpg")),
+        thumbnail = "https://i1.ytimg.com/vi/oMhrUjdkZRs/sddefault.jpg"),
     VideoEntity(
         rowId = 1L,
         kind = "youtube#channel",
@@ -48,8 +46,7 @@ val dummyData = mutableListOf(
         publishedAt = "2024-03-28T02:25:27Z",
         publishTime = "2024-03-28T02:25:27Z",
         duration = "08:07",
-        thumbnail = Thumbnail(
-            url = "https://i1.ytimg.com/vi/buDBzX5vyBM/sddefault.jpg")),
+        thumbnail = "https://i1.ytimg.com/vi/buDBzX5vyBM/sddefault.jpg"),
     VideoEntity(
         rowId = 1L,
         kind = "youtube#channel",
@@ -62,8 +59,7 @@ val dummyData = mutableListOf(
         publishedAt = "2024-03-28T02:25:27Z",
         publishTime = "2024-03-28T02:25:27Z",
         duration = "03:06",
-        thumbnail = Thumbnail(
-            url = "https://i1.ytimg.com/vi/cSyzqumO0OI/sddefault.jpg")),
+        thumbnail = "https://i1.ytimg.com/vi/cSyzqumO0OI/sddefault.jpg"),
     VideoEntity(
         rowId = 1L,
         kind = "youtube#channel",
@@ -76,8 +72,7 @@ val dummyData = mutableListOf(
         publishedAt = "2024-03-28T02:25:27Z",
         publishTime = "2024-03-28T02:25:27Z",
         duration = "04:20",
-        thumbnail = Thumbnail(
-            url = "https://i1.ytimg.com/vi/Dmd1yenSN4o/sddefault.jpg")),
+        thumbnail = "https://i1.ytimg.com/vi/Dmd1yenSN4o/sddefault.jpg"),
     VideoEntity(
         rowId = 1L,
         kind = "youtube#channel",
@@ -90,8 +85,7 @@ val dummyData = mutableListOf(
         publishedAt = "2024-03-28T02:25:27Z",
         publishTime = "2024-03-28T02:25:27Z",
         duration = "12:52",
-        thumbnail = Thumbnail(
-            url = "https://i1.ytimg.com/vi/NfF9BFwwfnw/sddefault.jpg")),
+        thumbnail = "https://i1.ytimg.com/vi/NfF9BFwwfnw/sddefault.jpg"),
     VideoEntity(
         rowId = 1L,
         kind = "youtube#channel",
@@ -104,8 +98,7 @@ val dummyData = mutableListOf(
         publishedAt = "2024-03-28T02:25:27Z",
         publishTime = "2024-03-28T02:25:27Z",
         duration = "03:37",
-        thumbnail = Thumbnail(
-            url = "https://i1.ytimg.com/vi/TmIMRzG93d4/sddefault.jpg")),
+        thumbnail = "https://i1.ytimg.com/vi/TmIMRzG93d4/sddefault.jpg"),
     VideoEntity(
         rowId = 1L,
         kind = "youtube#channel",
@@ -118,6 +111,5 @@ val dummyData = mutableListOf(
         publishedAt = "2024-03-28T02:25:27Z",
         publishTime = "2024-03-28T02:25:27Z",
         duration = "05:07",
-        thumbnail = Thumbnail(
-            url = "https://i1.ytimg.com/vi/rdpAs4ER7PA/sddefault.jpg")),
+        thumbnail = "https://i1.ytimg.com/vi/rdpAs4ER7PA/sddefault.jpg"),
 )
