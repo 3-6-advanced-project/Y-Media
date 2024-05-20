@@ -4,15 +4,22 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.example.youtubeapi.data.local.dao.VideoEntityDao
-import com.example.youtubeapi.data.model.entity.VideoEntity
+import com.example.youtubeapi.data.model.dto.Channel
+import com.example.youtubeapi.data.model.dto.VideoCategory
+import com.example.youtubeapi.data.repository.VideoRepository
+import com.example.youtubeapi.extractChannelIdStringFromVideos
+import com.example.youtubeapi.network.RetrofitClient
+import com.example.youtubeapi.presentation.uistate.VideoState
+import com.example.youtubeapi.presentation.uistate.asVideoState
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import androidx.lifecycle.viewModelScope
+import com.example.youtubeapi.data.local.dao.VideoEntityDao
+import com.example.youtubeapi.data.model.entity.VideoEntity
+import kotlinx.coroutines.launch
 import androidx.lifecycle.viewmodel.CreationExtras
-import com.example.youtubeapi.data.repository.VideoRepository
-import com.example.youtubeapi.network.RetrofitClient
-import com.example.youtubeapi.presentation.uistate.VideoState
 import com.example.youtubeapi.presentation.uistate.asVideoState
 
 // Represents different states for the LatestNews screen
@@ -23,8 +30,24 @@ sealed interface LatestNewsUiState {
 
 class MainViewModel(
     private val videoEntityDao: VideoEntityDao,
-    private val videoRepository: VideoRepository,
-) : ViewModel() {
+    private val videoRepository: VideoRepository
+): ViewModel() {
+
+    private val _mostPopularVideos = MutableStateFlow(listOf<VideoState>())
+    val mostPopularVideos = _mostPopularVideos.asStateFlow()
+
+    private val _mostPopularVideosWithCategory = MutableStateFlow(listOf<VideoState>())
+    val mostPopularVideoWithCategory = _mostPopularVideosWithCategory.asStateFlow()
+
+    private val _channels = MutableStateFlow(listOf<Channel>())
+    val channels = _channels.asStateFlow()
+
+    private val _categories = MutableStateFlow(listOf<VideoCategory>())
+    val categories = _categories.asStateFlow()
+
+    private val _currentCategory = MutableStateFlow<VideoCategory?>(null)
+    val currentCategory = _currentCategory.asStateFlow()
+
     private val _uiState: MutableStateFlow<LatestNewsUiState> = MutableStateFlow(LatestNewsUiState.Success(emptyList()))
     val uiState = _uiState.asStateFlow()
 
@@ -36,7 +59,25 @@ class MainViewModel(
     val bookmarks = _bookmarks.asStateFlow()
 
     init {
+        initMostPopularVideos()
+        initVideoCategories()
         initBookmarks()
+    }
+
+    private fun initMostPopularVideos() {
+        viewModelScope.launch(Dispatchers.IO) {
+            _mostPopularVideos.value = videoRepository.getMostPopularVideo().items.map {
+                Log.e("TAG", "initMostPopularVideos: $it", )
+                it.asVideoState()
+            }
+        }
+    }
+
+    private fun initVideoCategories() {
+        viewModelScope.launch(Dispatchers.IO) {
+            _categories.value = videoRepository.getVideoCategories().items
+            initCurrentCategory(_categories.value[0])
+        }
     }
 
     private fun initBookmarks() {
@@ -46,6 +87,17 @@ class MainViewModel(
             }
         }
     }
+
+    fun initCurrentCategory(videoCategory: VideoCategory) {
+        _currentCategory.value = videoCategory
+
+        viewModelScope.launch(Dispatchers.IO) {
+            val temp = videoRepository
+                .getMostPopularVideo(videoCategoryId = videoCategory.id).items
+
+            _mostPopularVideosWithCategory.value = temp.map { it.asVideoState() }
+            _channels.value = videoRepository
+                .getChannels(extractChannelIdStringFromVideos(temp)).items
 
     fun onSearch(
         query: String,
@@ -70,7 +122,8 @@ class MainViewModel(
             Log.e("Api Call Error", it.message.toString())
         }
     }
-//Gson converter = dto 만들어서 class로 변환...
+          
+    // Gson converter = dto 만들어서 class로 변환...
     fun onDetail(videoId: String) = viewModelScope.launch{
         runCatching {
             val videos = videoRepository.getVideoById(videoId = videoId) //여기까진 해당 videos list(항 1개) 들고옴 이해함
@@ -82,9 +135,11 @@ class MainViewModel(
         }.onFailure {
             _uiDetailState.value = LatestNewsUiState.Error(it)
             Log.e("Api Call Error", it.message.toString())
+
         }
     }
 }
+
 
 class MainViewModelFactory(
     private val videoEntityDao: VideoEntityDao
@@ -103,3 +158,4 @@ class MainViewModelFactory(
         repository
     ) as T
 }
+

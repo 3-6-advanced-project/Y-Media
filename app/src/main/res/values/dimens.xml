@@ -4,4 +4,8 @@
     <dimen name="default_horizontal_margin12">12dp</dimen>
     <dimen name="default_horizontal_margin16">16dp</dimen>
 
+    <dimen name="home_fragment_popular_video_width">240dp</dimen>
+    <dimen name="home_fragment_popular_video_height">135dp</dimen>
+
+    <dimen name="home_fragment_channel_size">65dp</dimen>
 </resources>

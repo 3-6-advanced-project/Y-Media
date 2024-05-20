@@ -8,14 +8,19 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.youtubeapi.adapter.MyVideoAdapter
+import com.example.youtubeapi.data.local.AppDatabase
 import com.example.youtubeapi.databinding.FragmentMyVideoBinding
 import com.example.youtubeapi.dummyData
 import com.example.youtubeapi.viewmodel.MainViewModel
+import com.example.youtubeapi.viewmodel.MainViewModelFactory
 
 class MyVideoFragment : Fragment() {
 
     private val binding by lazy { FragmentMyVideoBinding.inflate(layoutInflater) }
-    private val viewModel: MainViewModel by activityViewModels()
+    private val db by lazy { AppDatabase.getInstance(requireContext())!! }
+    private val viewModel: MainViewModel by activityViewModels {
+        MainViewModelFactory(db.videoDao())
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

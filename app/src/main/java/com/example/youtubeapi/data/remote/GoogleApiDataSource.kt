@@ -1,8 +1,11 @@
 package com.example.youtubeapi.data.remote
 
 import com.example.youtubeapi.BuildConfig
+import com.example.youtubeapi.data.model.dto.ChannelsResponse
+import com.example.youtubeapi.data.model.dto.VideoResponse
 import com.example.youtubeapi.data.model.dto.HomeVideo
 import com.example.youtubeapi.data.model.dto.SearchVideo
+import com.example.youtubeapi.data.model.dto.VideoCategoryResponse
 import com.example.youtubeapi.data.model.dto.VideoById
 import com.example.youtubeapi.data.model.dto.VideoResponse
 import retrofit2.http.GET
@@ -13,7 +16,7 @@ interface GoogleApiDataSource {
     @GET("youtube/v3/videos")
     suspend fun getMostPopularVideo(
         @Query("key") key: String = BuildConfig.GOOGLE_API_KEY,
-        @Query("part") part: String = "snippet",
+        @Query("part") part: String = "snippet,contentDetails",
         @Query("chart") chart: String = "mostPopular",
         @Query("maxHeight") maxHeight: Int,
         @Query("maxResults") maxResults: Int,
@@ -49,6 +52,20 @@ interface GoogleApiDataSource {
         @Query("regionCode") regionCode: String = "KR",
         @Query("relevanceLanguage") relevanceLanguage: String = "ko",
     ): VideoResponse<SearchVideo>
+
+    @GET("youtube/v3/videoCategories")
+    suspend fun getVideoCategories(
+        @Query("key") key: String = BuildConfig.GOOGLE_API_KEY,
+        @Query("part") part: String = "snippet",
+        @Query("regionCode") regionCode: String = "KR"
+    ): VideoCategoryResponse
+
+    @GET("youtube/v3/channels")
+    suspend fun getChannels(
+        @Query("key") key: String = BuildConfig.GOOGLE_API_KEY,
+        @Query("part") part: String = "snippet",
+        @Query("id") id: String
+    ): ChannelsResponse
 
     @GET("youtube/v3/videos")
     suspend fun getVideoById(

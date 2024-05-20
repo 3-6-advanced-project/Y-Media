@@ -1,15 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.fragment.HomeFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".presentation.fragment.HomeFragment"
+    android:background="@color/almost_black">
 
-    <!-- TODO: Update blank fragment layout -->
+    <ImageView
+        android:id="@+id/iv_top_banner_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_youtube"
+        android:layout_margin="@dimen/default_horizontal_margin16"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
     <TextView
+        android:id="@+id/tv_most_popular_video_indic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/home_fragment_most_popular_videos_text"
+        android:layout_margin="@dimen/default_horizontal_margin12"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:layout_marginTop="@dimen/default_horizontal_margin12"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_top_banner_icon"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_most_popular_video"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/default_horizontal_margin8"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_most_popular_video_indic"/>
 
+    <View
+        android:id="@+id/v_first_divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rv_most_popular_video"
+        android:layout_marginTop="@dimen/default_horizontal_margin12"
+        android:background="@color/dark_grey"/>
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/tv_category_video_indic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/home_fragment_category_videos_text"
+        android:layout_margin="@dimen/default_horizontal_margin12"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:layout_marginTop="@dimen/default_horizontal_margin12"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/v_first_divider"/>
+
+    <TextView
+        android:id="@+id/tv_current_category"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/default_horizontal_margin12"
+        android:text=""
+        android:textColor="@color/grey"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/tv_category_video_indic"
+        app:layout_constraintTop_toTopOf="@id/tv_category_video_indic"
+        app:layout_constraintBottom_toBottomOf="@id/tv_category_video_indic"/>
+
+    <ImageView
+        android:id="@+id/iv_menu_button"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:padding="@dimen/default_horizontal_margin8"
+        android:src="@drawable/ic_down_arrow"
+        android:layout_marginStart="@dimen/default_horizontal_margin8"
+        app:layout_constraintStart_toEndOf="@+id/tv_current_category"
+        app:layout_constraintTop_toTopOf="@id/tv_current_category"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_current_category"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_category_video"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/default_horizontal_margin8"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_category_video_indic"/>
+
+    <View
+        android:id="@+id/v_second_divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rv_category_video"
+        android:layout_marginTop="@dimen/default_horizontal_margin12"
+        android:background="@color/dark_grey"/>
+
+    <TextView
+        android:id="@+id/tv_category_channel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/home_fragment_category_channels_text"
+        android:layout_margin="@dimen/default_horizontal_margin12"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:layout_marginTop="@dimen/default_horizontal_margin12"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/v_second_divider"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_category_channel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/default_horizontal_margin8"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_category_channel"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
