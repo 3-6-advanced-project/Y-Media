@@ -9,6 +9,7 @@ import androidx.fragment.app.activityViewModels
 import com.example.youtubeapi.databinding.FragmentVideoDetailBinding
 import com.example.youtubeapi.viewmodel.MainViewModel
 
+private const val ARG_PARAM1 = "param1"
 class VideoDetailFragment : Fragment() {
 
     private val binding by lazy { FragmentVideoDetailBinding.inflate(layoutInflater) }
@@ -33,5 +34,16 @@ class VideoDetailFragment : Fragment() {
             val videoId = "gEV8T3541j8"
             binding.btVideo2Test.text = videoId
         }
+    }
+
+    companion object {
+        @JvmStatic
+        fun newInstance(param1: String) =
+            // [1] Activity -> FirstFragment
+            VideoDetailFragment().apply {
+                arguments = Bundle().apply { //arguments에 받아져 있음.
+                    putString(ARG_PARAM1, param1)
+                }
+            }
     }
 }

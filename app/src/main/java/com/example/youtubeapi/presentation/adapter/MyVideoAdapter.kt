@@ -1,13 +1,18 @@
 package com.example.youtubeapi.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.youtubeapi.data.model.entity.VideoEntity
 import com.example.youtubeapi.databinding.ItemsGridBinding
 
-class MyVideoAdapter(val myVideo: MutableList<VideoEntity>) : RecyclerView.Adapter<MyVideoAdapter.ViewHolder>() {
+class MyVideoAdapter(
+    val myVideo: MutableList<VideoEntity>,
+    val itemClickListener: (String) -> Unit = {},
+) : RecyclerView.Adapter<MyVideoAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ItemsGridBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -17,9 +22,13 @@ class MyVideoAdapter(val myVideo: MutableList<VideoEntity>) : RecyclerView.Adapt
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val dataSet = myVideo[position]
         holder.thumbnail.load(dataSet.thumbnailUrl)
+        holder.thumbnail.setOnClickListener {
+            itemClickListener(dataSet.videoId)
+        }
         holder.duration.text = dataSet.duration
         holder.title.text = dataSet.title
         holder.channel.text = dataSet.channelTitle
+
     }
 
     override fun getItemId(position: Int): Long {
@@ -28,6 +37,13 @@ class MyVideoAdapter(val myVideo: MutableList<VideoEntity>) : RecyclerView.Adapt
 
     override fun getItemCount(): Int {
         return myVideo.size
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun updateItems(items: List<VideoEntity>) {
+        myVideo.clear()
+        myVideo.addAll(items)
+        notifyDataSetChanged()
     }
 
     inner class ViewHolder(private val binding: ItemsGridBinding) : RecyclerView.ViewHolder(binding.root) {
