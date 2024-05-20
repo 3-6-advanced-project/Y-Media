@@ -51,6 +51,10 @@ class MainViewModel(
     private val _uiState: MutableStateFlow<LatestNewsUiState> = MutableStateFlow(LatestNewsUiState.Success(emptyList()))
     val uiState = _uiState.asStateFlow()
 
+    //디테일 페이지로 이동 시 Search 결과 연결 + 0번으로만 이동해서 분리.
+    private val _uiDetailState: MutableStateFlow<LatestNewsUiState> = MutableStateFlow(LatestNewsUiState.Success(emptyList()))
+    val uiDetailState = _uiDetailState.asStateFlow()
+
     private val _bookmarks = MutableStateFlow(listOf<VideoEntity>())
     val bookmarks = _bookmarks.asStateFlow()
 
@@ -58,30 +62,6 @@ class MainViewModel(
         initMostPopularVideos()
         initVideoCategories()
         initBookmarks()
-    }
-
-    fun onSearch(
-        query: String,
-        videoDuration: String
-    ) = viewModelScope.launch {
-        runCatching {
-            val videos = videoRepository.getSearchVideo(
-                query = query,
-                videoDuration = videoDuration
-            )
-
-            val videoState = videos.items.map {
-                it.asVideoState()
-            }
-
-            _uiState.value = LatestNewsUiState.Success(videoState)
-
-            Log.d("Api Call Success", videoState.toString())
-        }.onFailure {
-            _uiState.value = LatestNewsUiState.Error(it)
-
-            Log.e("Api Call Error", it.message.toString())
-        }
     }
 
     private fun initMostPopularVideos() {
@@ -118,6 +98,44 @@ class MainViewModel(
             _mostPopularVideosWithCategory.value = temp.map { it.asVideoState() }
             _channels.value = videoRepository
                 .getChannels(extractChannelIdStringFromVideos(temp)).items
+
+    fun onSearch(
+        query: String,
+        videoDuration: String
+    ) = viewModelScope.launch {
+        runCatching {
+            val videos = videoRepository.getSearchVideo(
+                query = query,
+                videoDuration = videoDuration
+            )
+
+            val videoState = videos.items.map {
+                it.asVideoState()
+            }
+
+            _uiState.value = LatestNewsUiState.Success(videoState)
+
+            Log.d("Api Call Success", videoState.toString())
+        }.onFailure {
+            _uiState.value = LatestNewsUiState.Error(it)
+
+            Log.e("Api Call Error", it.message.toString())
+        }
+    }
+          
+    // Gson converter = dto 만들어서 class로 변환...
+    fun onDetail(videoId: String) = viewModelScope.launch{
+        runCatching {
+            val videos = videoRepository.getVideoById(videoId = videoId) //여기까진 해당 videos list(항 1개) 들고옴 이해함
+            Log.d("test 1", "1")
+            val videoState = videos.items.map { it.asVideoState() } //이 코드는 뭐 하는 거지? 각 비디오 (지금은 1개)내 정렬?
+            Log.d("test 2", "2")
+            _uiDetailState.value = LatestNewsUiState.Success(videoState) //이해못함 > _uiDetailState값을 ui 띄울때 불러와야됨
+            Log.d("Api Call Success", videoState.toString())
+        }.onFailure {
+            _uiDetailState.value = LatestNewsUiState.Error(it)
+            Log.e("Api Call Error", it.message.toString())
+
         }
     }
 }
