@@ -17,8 +17,11 @@ import com.example.youtubeapi.databinding.FragmentVideoDetailBinding
 import com.example.youtubeapi.viewmodel.LatestNewsUiState
 import com.example.youtubeapi.viewmodel.MainViewModel
 import com.example.youtubeapi.viewmodel.MainViewModelFactory
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class VideoDetailFragment : Fragment() {
 
@@ -45,25 +48,14 @@ class VideoDetailFragment : Fragment() {
 
         binding.btVideo1Test.setOnClickListener {
             viewModel.onDetail(videoId)
-
-            val like = binding.ivLikesButton
-            if (db.videoDao().isThisVideoExists(videoId)) { //db에 해당  videoId를 가진 영상이 없는 경우. 추가.
-                like.setImageResource(R.drawable.ic_likes)
-                db.videoDao().insertVideoEntityWithParameters(
-                videoId = videoId,
-                title = "집중력과 인내심이 필요한 장난감 #shorts",
-                description = "",
-                channelTitle =  "신사장",
-                channelId = "UCdyeqVNyJehPmKBEJ520rhg",
-                publishedAt = "2022-03-13T02:12:08Z",
-                duration = "PT23M24S",
-                thumbnailUrl = "https://i.ytimg.com/vi/Sg95nokmww8/hqdefault.jpg")
-            }
-            else { //db에 해당 videoId를 가진 영상이 있는 경우. 제외.
-                like.setImageResource(R.drawable.ic_likes_outline)
-                db.videoDao().deleteVideoEntityById(videoId = videoId)
-            }
+            savedLikes(videoId)
         }
+
+        binding.ivLikesButton.setOnClickListener {
+            binding.ivLikesButton.setImageResource(R.drawable.ic_likes)
+            savedLikes(videoId)
+        }
+
     }
 
     private fun initViewModel() = lifecycleScope.launch { //변화 감지 갱신
@@ -90,6 +82,30 @@ class VideoDetailFragment : Fragment() {
     }
 
     private fun initRVItem() = with(binding) {
+    }
+
+    private fun savedLikes(videoId: String) = lifecycleScope.launch() { //https://velog.io/@jeongminji4490/Error-cannot-access-database-on-main-thread-LifecycleScope
+        withContext(Dispatchers.IO){
+            val like = binding.ivLikesButton
+
+            if (!db.videoDao().isThisVideoExists(videoId)) { //db에 해당  videoId를 가진 영상이 없는 경우. 추가.
+                like.setImageResource(R.drawable.ic_likes)
+                db.videoDao().insertVideoEntityWithParameters(
+                    videoId = videoId,
+                    title = "",
+                    description = "",
+                    channelTitle =  "",
+                    channelId = "",
+                    publishedAt = "",
+                    duration = "",
+                    thumbnailUrl = "")
+            }
+            else { //db에 해당 videoId를 가진 영상이 있는 경우. 제외.
+                like.setImageResource(R.drawable.ic_likes_outline)
+                db.videoDao().deleteVideoEntityById(videoId = videoId)
+            }
+        }
+
     }
 
 
