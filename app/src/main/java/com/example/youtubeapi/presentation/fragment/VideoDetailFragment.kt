@@ -47,10 +47,9 @@ class VideoDetailFragment : Fragment() {
             viewModel.onDetail(videoId)
         }
 
-        binding.ivLikesButton.setOnClickListener{
-            //좋아요가 이미 눌려진 영상인지 판정하기
-            val isVideoLiked = false //실제론 ROOM에서 들고옴
-
+        val like = binding.ivLikesButton
+        if (db.videoDao().isThisVideoExists(videoId)) { //db에 해당  videoId를 가진 영상이 없는 경우. 추가.
+            like.setImageResource(R.drawable.ic_likes)
             db.videoDao().insertVideoEntityWithParameters(
                 videoId = videoId,
                 title = "",
@@ -61,7 +60,10 @@ class VideoDetailFragment : Fragment() {
                 duration = "",
                 thumbnailUrl = "")
         }
-
+        else { //db에 해당 videoId를 가진 영상이 있는 경우. 제외.
+            like.setImageResource(R.drawable.ic_likes_outline)
+            db.videoDao().deleteVideoEntityById(videoId = videoId)
+        }
     }
 
     private fun initViewModel() = lifecycleScope.launch { //변화 감지 갱신
