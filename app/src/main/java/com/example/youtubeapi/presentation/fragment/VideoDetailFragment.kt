@@ -34,7 +34,7 @@ class VideoDetailFragment : Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         arguments.let { videoId = it!!.getString(ARG_PARAM1) }
-        Log.d("video id id id id idddd", videoId.toString())
+        Log.d("video id: onAttach에서 arguments 이후", videoId.toString())
     }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -104,7 +104,7 @@ class VideoDetailFragment : Fragment() {
     private fun checkVideoIcon(videoId: String) = lifecycleScope.launch() {
         withContext(Dispatchers.IO) {
             val like = binding.ivLikesButton
-            if (!db.videoDao().isThisVideoExists(videoId)) {
+            if (db.videoDao().isThisVideoExists(videoId)) {
                 like.setImageResource(R.drawable.ic_likes)
             }
         }
