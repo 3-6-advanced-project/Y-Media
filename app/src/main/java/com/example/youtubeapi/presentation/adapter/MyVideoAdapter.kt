@@ -14,6 +14,7 @@ class MyVideoAdapter(val myVideo: MutableList<VideoEntity>) : RecyclerView.Adapt
         return ViewHolder(binding)
     }
 
+    override fun onBindViewHolder(holder: VideoViewHolder, position: Int) {
         val dataSet = myVideo[position]
         holder.thumbnail.load(dataSet.thumbnail.url)
         holder.duration.text = dataSet.duration
