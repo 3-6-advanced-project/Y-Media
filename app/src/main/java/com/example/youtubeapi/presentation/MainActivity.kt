@@ -10,6 +10,7 @@ import com.example.youtubeapi.databinding.ActivityMainBinding
 import com.example.youtubeapi.presentation.adapter.ViewPagerAdapter
 import com.example.youtubeapi.presentation.fragment.VideoDetailFragment
 import com.google.android.material.tabs.TabLayoutMediator
+import java.time.Duration
 
 class MainActivity : AppCompatActivity() {
 
@@ -44,4 +45,9 @@ class MainActivity : AppCompatActivity() {
             }.attach()
         }
     }
+}
+
+fun main() {
+    val regex = "PT(?<H>[0-9]*)H{0,1}(?<M>[0-9]*)M{0,1}(?<S>[0-9]*)S{0,1}".toRegex()
+
 }
