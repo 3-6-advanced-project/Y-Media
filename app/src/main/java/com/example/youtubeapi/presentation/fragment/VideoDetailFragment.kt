@@ -13,6 +13,7 @@ import coil.load
 import com.example.youtubeapi.R
 import com.example.youtubeapi.data.local.AppDatabase
 import com.example.youtubeapi.databinding.FragmentVideoDetailBinding
+import com.example.youtubeapi.presentation.uistate.VideoState
 import com.example.youtubeapi.viewmodel.LatestNewsUiState
 import com.example.youtubeapi.viewmodel.MainViewModel
 import com.example.youtubeapi.viewmodel.MainViewModelFactory
@@ -24,6 +25,8 @@ private const val ARG_PARAM1 = "param1"
 
 class VideoDetailFragment : Fragment() {
     private var videoId: String? = null
+
+    private var currentVideoState: VideoState? = null
 
     private val binding by lazy { FragmentVideoDetailBinding.inflate(layoutInflater) }
     private val db by lazy { AppDatabase.getInstance(requireContext())!! }
@@ -84,17 +87,33 @@ class VideoDetailFragment : Fragment() {
             when (uiDetailState) {
                 is LatestNewsUiState.Success -> {
                     val videoStates = uiDetailState.videoStates //thumbnail
+//                    if(videoStates.isNotEmpty()) { //viewModel 완전 초기값... 비어있어 인덱스 오류?
+//                        binding.ivThumbnail.load(videoStates[0].thumbnail.url){ //glide나 [coil]로 웹 이미지 로드
+//                            placeholder(R.drawable.img_thumbnail_test) //적용 전. 회색 이미지로 교체!
+//                        }
+//                        Log.d("videoStates", videoStates.size.toString())
+//                        binding.tvTitle.text = videoStates[0].title
+//                        binding.tvChannel.text = videoStates[0].channelTitle
+//                        binding.ivChannelProfile.load(videoStates[0].thumbnail.url) //우선 섬네일 넣어뒀는데 채널 사진으로 바꾸어야 됨. 갖고 올 수 있는 건가???
+//                        binding.tvSubscribers.text = videoStates[0].channelTitle // 채널 구독자 수 확인하려면 채널 API 사용해야 함.
+//                        binding.tvDescription.text = videoStates[0].description
+//                    }
 
-                    if(videoStates.isNotEmpty()) { //viewModel 완전 초기값... 비어있어 인덱스 오류?
-                        binding.ivThumbnail.load(videoStates[0].thumbnail.url){ //glide나 [coil]로 웹 이미지 로드
-                            placeholder(R.drawable.img_thumbnail_test) //적용 전. 회색 이미지로 교체!
+                    if(videoStates.isNotEmpty()) {
+                        currentVideoState = uiDetailState.videoStates[0]
+                        currentVideoState?.let {
+                            with(binding) {
+                                ivThumbnail.load(videoStates[0].thumbnail.url) { //glide나 [coil]로 웹 이미지 로드
+                                    placeholder(R.drawable.img_thumbnail_test) //적용 전. 회색 이미지로 교체!
+                                }
+                                tvTitle.text = videoStates[0].title
+                                tvChannel.text = videoStates[0].channelTitle
+                                ivChannelProfile.load(videoStates[0].thumbnail.url) //우선 섬네일 넣어뒀는데 채널 사진으로 바꾸어야 됨. 갖고 올 수 있는 건가???
+                                tvSubscribers.text =
+                                    videoStates[0].channelTitle // 채널 구독자 수 확인하려면 채널 API 사용해야 함.
+                                tvDescription.text = videoStates[0].description
+                            }
                         }
-                        Log.d("videoStates", videoStates.size.toString())
-                        binding.tvTitle.text = videoStates[0].title
-                        binding.tvChannel.text = videoStates[0].channelTitle
-                        binding.ivChannelProfile.load(videoStates[0].thumbnail.url) //우선 섬네일 넣어뒀는데 채널 사진으로 바꾸어야 됨. 갖고 올 수 있는 건가???
-                        binding.tvSubscribers.text = videoStates[0].channelTitle // 채널 구독자 수 확인하려면 채널 API 사용해야 함.
-                        binding.tvDescription.text = videoStates[0].description
                     }
                 }
                 is LatestNewsUiState.Error -> initRVItem()
@@ -119,15 +138,28 @@ class VideoDetailFragment : Fragment() {
 
             if (!db.videoDao().isThisVideoExists(videoId)) { //db에 해당  videoId를 가진 영상이 없는 경우. 추가.
                 like.setImageResource(R.drawable.ic_likes)
-                db.videoDao().insertVideoEntityWithParameters(
-                    videoId = videoId,
-                    title = binding.tvTitle.text.toString(),
-                    description = binding.tvDescription.text.toString(),
-                    channelTitle =  binding.tvChannel.text.toString(),
-                    channelId = "",
-                    publishedAt = "",
-                    duration = "",
-                    thumbnailUrl = "")
+//                db.videoDao().insertVideoEntityWithParameters(
+//                    videoId = videoId,
+//                    title = binding.tvTitle.text.toString(),
+//                    description = binding.tvDescription.text.toString(),
+//                    channelTitle =  binding.tvChannel.text.toString(),
+//                    channelId = "",
+//                    publishedAt = "",
+//                    duration = "",
+//                    thumbnailUrl = "")
+
+                currentVideoState?.let {
+                    db.videoDao().insertVideoEntityWithParameters(
+                        videoId = it.id,
+                        title = it.title,
+                        description = it.description,
+                        channelTitle =  it.channelTitle,
+                        channelId = it.channelId,
+                        publishedAt = it.publishedAt,
+                        duration = it.duration,
+                        thumbnailUrl = it.thumbnail.url)
+                }
+
             }
             else { //db에 해당 videoId를 가진 영상이 있는 경우. 제외.
                 like.setImageResource(R.drawable.ic_likes_outline)
