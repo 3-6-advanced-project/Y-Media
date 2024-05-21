@@ -1,5 +1,7 @@
 package com.example.youtubeapi.presentation.fragment
 
+import android.content.res.Resources
+import android.graphics.Rect
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,6 +12,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.youtubeapi.R
 import com.example.youtubeapi.adapter.MyVideoAdapter
 import com.example.youtubeapi.data.local.AppDatabase
@@ -44,6 +47,11 @@ class MyVideoFragment : Fragment() {
         binding.mvRvLiked.apply {
             layoutManager = GridLayoutManager(activity, 2)
             this.adapter = mAdapter
+            this.addItemDecoration(GridSpacingItemDecoration(
+                2,
+                (16 * resources.displayMetrics.density + 0.5f).toInt(),
+                false)
+            )
         }
 
         lifecycleScope.launch {
@@ -71,42 +79,43 @@ class MyVideoFragment : Fragment() {
             .commit()
     }
 
-//    internal class GridSpacingItemDecoration(
-//        private val spanCount: Int,
-//        private val spacing: Int,
-//        private val includeEdge: Boolean
-//    ) : ItemDecoration() {
-//
-//        override fun getItemOffsets(
-//            outRect: Rect,
-//            view: View,
-//            parent: RecyclerView,
-//            state: RecyclerView.State
-//        ) {
-//
-//            val position = parent.getChildAdapterPosition(view) // item position
-//            val column = position % spanCount // item column
-//            if (includeEdge) {
-//                outRect.left =
-//                    spacing - column * spacing / spanCount // spacing - column * ((1f / spanCount) * spacing)
-//                outRect.right =
-//                    (column + 1) * spacing / spanCount // (column + 1) * ((1f / spanCount) * spacing)
-//                if (position < spanCount) { // top edge
-//                    outRect.top = spacing
-//                }
-//                outRect.bottom = spacing // item bottom
-//            } else {
-//                outRect.left =
-//                    column * spacing / spanCount // column * ((1f / spanCount) * spacing)
-//                outRect.right =
-//                    spacing - (column + 1) * spacing / spanCount // spacing - (column + 1) * ((1f /    spanCount) * spacing)
-//                if (position >= spanCount) {
-//                    outRect.top = spacing // item top
-//                }
-//            }
-//        }
-//    }
-//
-//    private fun Float.fromDpToPx(): Int =
-//        (this * Resources.getSystem().displayMetrics.density).toInt()
+    internal class GridSpacingItemDecoration(
+        private val spanCount: Int,
+        private val spacing: Int,
+        private val includeEdge: Boolean
+    ) : RecyclerView.ItemDecoration() {
+
+        override fun getItemOffsets(
+            outRect: Rect,
+            view: View,
+            parent: RecyclerView,
+            state: RecyclerView.State
+        ) {
+
+            val position = parent.getChildAdapterPosition(view) // item position
+            val column = position % spanCount // item column
+            if (includeEdge) {
+                outRect.left =
+                    spacing - column * spacing / spanCount // spacing - column * ((1f / spanCount) * spacing)
+                outRect.right =
+                    (column + 1) * spacing / spanCount // (column + 1) * ((1f / spanCount) * spacing)
+                if (position < spanCount) { // top edge
+                    outRect.top = spacing
+                }
+                outRect.bottom = spacing // item bottom
+            } else {
+                outRect.left =
+                    column * spacing / spanCount // column * ((1f / spanCount) * spacing)
+                outRect.right =
+                    spacing - (column + 1) * spacing / spanCount // spacing - (column + 1) * ((1f /    spanCount) * spacing)
+                if (position >= spanCount) {
+                    outRect.top = spacing // item top
+                }
+            }
+        }
+    }
+
+    private fun Float.fromDpToPx(): Int =
+        (this * Resources.getSystem().displayMetrics.density).toInt()
+
 }

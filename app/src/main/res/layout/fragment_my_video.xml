@@ -112,6 +112,8 @@
             android:id="@+id/mv_rv_liked"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/default_horizontal_margin16"
+            android:layout_marginRight="@dimen/default_horizontal_margin16"
             android:layout_gravity="center_vertical"
             android:layout_marginBottom="15dp"/>
 

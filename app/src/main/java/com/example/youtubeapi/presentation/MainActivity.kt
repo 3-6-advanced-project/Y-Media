@@ -46,8 +46,3 @@ class MainActivity : AppCompatActivity() {
         }
     }
 }
-
-fun main() {
-    val regex = "PT(?<H>[0-9]*)H{0,1}(?<M>[0-9]*)M{0,1}(?<S>[0-9]*)S{0,1}".toRegex()
-
-}
