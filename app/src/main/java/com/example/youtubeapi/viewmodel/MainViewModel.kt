@@ -18,7 +18,6 @@ import kotlinx.coroutines.launch
 import com.example.youtubeapi.data.local.dao.VideoEntityDao
 import com.example.youtubeapi.data.model.entity.VideoEntity
 import androidx.lifecycle.viewmodel.CreationExtras
-import com.example.youtubeapi.data.model.dto.ChannelInfo
 import com.example.youtubeapi.presentation.uistate.ChannelState
 import com.example.youtubeapi.presentation.uistate.asChannelState
 
@@ -56,8 +55,8 @@ class MainViewModel(
     private val _uiDetailState: MutableStateFlow<LatestNewsUiState> = MutableStateFlow(LatestNewsUiState.Success(emptyList()))
     val uiDetailState = _uiDetailState.asStateFlow()
 
-    private val _channelInfo = MutableStateFlow(listOf<ChannelInfo>())
-    private val channelInfo = _channelInfo.asStateFlow()
+    private val _uiDetailStateChannel: MutableStateFlow<LatestNewsUiState> = MutableStateFlow(LatestNewsUiState.ChannelSuccess(emptyList()))
+    val uiDetailStateChannel = _uiDetailStateChannel.asStateFlow()
 
     private val _bookmarks = MutableStateFlow(listOf<VideoEntity>())
     val bookmarks = _bookmarks.asStateFlow()
@@ -148,7 +147,8 @@ class MainViewModel(
     fun onDetailChannel(channelId: String) = viewModelScope.launch{
         runCatching {
             val channel = videoRepository.getByChannelId(channelId = channelId) //출력결과 타입 ChannelInfo
-            _uiDetailState.value = LatestNewsUiState.ChannelSuccess(channel.asChannelState())
+            val channelState = channel.asChannelState()
+            _uiDetailState.value = LatestNewsUiState.ChannelSuccess(channelState)
             Log.d("Api Call Channel Success", channel.toString())
         }.onFailure {
             _uiDetailState.value = LatestNewsUiState.Error(it)

@@ -34,6 +34,8 @@ class VideoDetailFragment : Fragment() {
         MainViewModelFactory(db.videoDao())
     }
 
+    private lateinit var channelId: String //영상 채널 ID 저장 위치
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         arguments.let { videoId = it!!.getString(ARG_PARAM1) }
@@ -62,7 +64,9 @@ class VideoDetailFragment : Fragment() {
         viewModel.onDetail(videoId!!)
         Log.d("video id: viewModel.onDetail에 잘 들어왔는지", videoId)
 
-
+        channelId = findChannelId(videoId!!) //videolId에서 추출하는 함수 필요하지 않아?
+        viewModel.onDetailChannel(channelId!!)
+        Log.d("channel id: viewModel.onDetailChannels에 잘 들어왔는지", channelId)
 
         binding.ivLikesButton.setOnClickListener {
             savedLikes(videoId!!) //좋아요가 저장되어있는지 확인하고, 없으면
@@ -70,6 +74,10 @@ class VideoDetailFragment : Fragment() {
 
     }
 
+    private fun findChannelId(videoId: String): String{
+        val channelId = "UCCjHwLqUSjxB7NtvUK9fcmw" //TODO: 실제론 videoId에서 받아오기
+        return channelId
+    }
 
     companion object {
         @JvmStatic
@@ -83,44 +91,46 @@ class VideoDetailFragment : Fragment() {
     }
 
 
+    private fun initViewModel2() = lifecycleScope.launch {
+        viewModel.uiDetailStateChannel.collect { channelState ->
+            when (channelState) {
+                is LatestNewsUiState.ChannelSuccess -> {
+                    val channelStates = channelState.channelStates
+                    if (channelState.channelStates.isNotEmpty()) {
+                        binding.ivChannelProfile.load(channelStates.thumbnail.url) {
+                            placeholder(R.drawable.img_profile_test)
+                        }
+                        binding.tvSubscribers.text = channelStates.subscribers.toString()
+                    }
+                }
+
+                is LatestNewsUiState.Error -> initRVItem()
+                else -> {}
+            }
+        }
+    }
     private fun initViewModel() = lifecycleScope.launch { //변화 감지 갱신
         viewModel.uiDetailState.collect { uiDetailState ->
             when (uiDetailState) {
                 is LatestNewsUiState.Success -> {
                     val videoStates = uiDetailState.videoStates //thumbnail
-//                    if(videoStates.isNotEmpty()) { //viewModel 완전 초기값... 비어있어 인덱스 오류?
-//                        binding.ivThumbnail.load(videoStates[0].thumbnail.url){ //glide나 [coil]로 웹 이미지 로드
-//                            placeholder(R.drawable.img_thumbnail_test) //적용 전. 회색 이미지로 교체!
-//                        }
-//                        Log.d("videoStates", videoStates.size.toString())
-//                        binding.tvTitle.text = videoStates[0].title
-//                        binding.tvChannel.text = videoStates[0].channelTitle
-//                        binding.ivChannelProfile.load(videoStates[0].thumbnail.url) //우선 섬네일 넣어뒀는데 채널 사진으로 바꾸어야 됨. 갖고 올 수 있는 건가???
-//                        binding.tvSubscribers.text = videoStates[0].channelTitle // 채널 구독자 수 확인하려면 채널 API 사용해야 함.
-//                        binding.tvDescription.text = videoStates[0].description
-//                    }
-
-                    if(videoStates.isNotEmpty()) {
-                        currentVideoState = uiDetailState.videoStates[0]
-                        currentVideoState?.let {
-                            with(binding) {
-                                ivThumbnail.load(videoStates[0].thumbnail.url) { //glide나 [coil]로 웹 이미지 로드
-                                    placeholder(R.drawable.img_thumbnail_test) //적용 전. 회색 이미지로 교체!
-                                }
-                                tvTitle.text = videoStates[0].title
-                                tvChannel.text = videoStates[0].channelTitle
-                                ivChannelProfile.load(videoStates[0].thumbnail.url) //우선 섬네일 넣어뒀는데 채널 사진으로 바꾸어야 됨. 갖고 올 수 있는 건가???
-                                tvSubscribers.text =
-                                    videoStates[0].channelTitle // 채널 구독자 수 확인하려면 채널 API 사용해야 함.
-                                tvDescription.text = videoStates[0].description
-                            }
+                    if (uiDetailState.videoStates.isNotEmpty()) {
+                        binding.ivThumbnail.load(videoStates[0].thumbnail.url) {
+                            placeholder(R.drawable.img_thumbnail_test)
                         }
+                        binding.tvTitle.text = videoStates[0].title
+                        binding.tvChannel.text = videoStates[0].channelTitle
+                        binding.tvDescription.text = videoStates[0].description
                     }
                 }
+
                 is LatestNewsUiState.Error -> initRVItem()
+                else -> {}
             }
         }
     }
+
+
 
     private fun initRVItem() = with(binding) {
     }
