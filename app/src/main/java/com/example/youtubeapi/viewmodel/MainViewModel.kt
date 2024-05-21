@@ -30,7 +30,8 @@ sealed interface LatestNewsUiState {
 
 class MainViewModel(
     private val videoEntityDao: VideoEntityDao,
-    private val videoRepository: VideoRepository
+    private val videoRepository: VideoRepository,
+    private val videoChannel: Channel
 ): ViewModel() {
 
     private val _mostPopularVideos = MutableStateFlow(listOf<VideoState>())
@@ -138,6 +139,18 @@ class MainViewModel(
             _uiDetailState.value = LatestNewsUiState.Error(it)
             Log.e("Api Call Error", it.message.toString())
 
+        }
+    }
+
+    fun onDetailChannels(channelId: String) = viewModelScope.launch{
+        runCatching {
+            val channel = videoRepository.getChannelById(channelId = channelId)
+            val channelState = channel.items.map {it.asChannelState()}
+            _uiDetailState.value = LatestNewsUiState.Success(channelState)
+            Log.d("Api Call Success", channelState.toString())
+        }.onFailure { 
+            _uiDetailState.value = LatestNewsUiState.Error(it)
+            Log.e("Api Call Error", it.message.toString())
         }
     }
 }
