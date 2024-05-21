@@ -1,6 +1,7 @@
 package com.example.youtubeapi.data.remote
 
 import com.example.youtubeapi.BuildConfig
+import com.example.youtubeapi.data.model.dto.ChannelInfo
 import com.example.youtubeapi.data.model.dto.ChannelsResponse
 import com.example.youtubeapi.data.model.dto.VideoResponse
 import com.example.youtubeapi.data.model.dto.HomeVideo
@@ -73,19 +74,12 @@ interface GoogleApiDataSource {
         @Query("part") part: String = "snippet"
     ): VideoResponse<VideoById>
 
-    //https://developers.google.com/youtube/v3/docs/channels/list
-    /*
-    * 사용할 api: v3/channels. ㅇㅋ
-    * suspend fun getChannelById에서 videoId: String을 받는다.
-    * VideoResponse에 사용할 타입 찾는 중.
-    *
-    * */
     @GET("youtube/v3/channels")
     suspend fun getByChannelId(
         @Query("key") key: String = BuildConfig.GOOGLE_API_KEY,
         @Query("id") id: String, //channel ID
         @Query("part") part: String = "snippet, statistics"
-    )
+    ): ChannelInfo
 }
 /* [getByChannelId에 대한 주석] - 내가 헷갈려서 기록함
 https://developers.google.com/youtube/v3/docs/channels#properties 에서 각 항목 타입 및 용례를 알아볼 수 있다.
