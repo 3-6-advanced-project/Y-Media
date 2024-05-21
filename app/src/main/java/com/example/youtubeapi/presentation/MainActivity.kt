@@ -1,3 +1,4 @@
+
 package com.example.youtubeapi.presentation
 
 import android.os.Bundle
@@ -21,10 +22,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         initView()
-
-        //테스트용으로 detailFragment와 연결함
-        supportFragmentManager.beginTransaction().replace(R.id.fl, VideoDetailFragment()).commit()
-
     }
 
     private fun initView() {

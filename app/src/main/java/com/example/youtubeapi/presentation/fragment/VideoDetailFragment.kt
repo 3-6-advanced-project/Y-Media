@@ -48,7 +48,7 @@ class VideoDetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initViewModel() //데이터 바뀔때 자동 호출됨. coroutine
 
-        binding.ivBackButton.setOnClickListener{ //뒤로가기
+        binding.ivBackButton.setOnClickListener{
             binding.cl.visibility = android.view.View.GONE
         }
 
@@ -61,6 +61,7 @@ class VideoDetailFragment : Fragment() {
         //arguments에서 가져온 videoId로 화면 정보 갱신
         viewModel.onDetail(videoId!!)
         Log.d("video id: viewModel.onDetail에 잘 들어왔는지", videoId)
+
 
 
         binding.ivLikesButton.setOnClickListener {
@@ -171,4 +172,3 @@ class VideoDetailFragment : Fragment() {
 
 
 }
-
