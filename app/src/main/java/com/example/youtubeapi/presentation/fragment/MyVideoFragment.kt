@@ -1,21 +1,37 @@
 package com.example.youtubeapi.presentation.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.youtubeapi.R
 import com.example.youtubeapi.adapter.MyVideoAdapter
+import com.example.youtubeapi.data.local.AppDatabase
 import com.example.youtubeapi.databinding.FragmentMyVideoBinding
 import com.example.youtubeapi.dummyData
 import com.example.youtubeapi.viewmodel.MainViewModel
+import com.example.youtubeapi.viewmodel.MainViewModelFactory
+import kotlinx.coroutines.launch
 
 class MyVideoFragment : Fragment() {
 
     private val binding by lazy { FragmentMyVideoBinding.inflate(layoutInflater) }
-    private val viewModel: MainViewModel by activityViewModels()
+    private val db by lazy { AppDatabase.getInstance(requireContext())!! }
+    private val viewModel: MainViewModel by activityViewModels {
+        MainViewModelFactory(db.videoDao())
+    }
+
+    private val mAdapter by lazy {
+        MyVideoAdapter { videoId ->
+            showDetailFragment(videoId)
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,11 +41,16 @@ class MyVideoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val bookmarks = dummyData
-        val adapter = MyVideoAdapter(bookmarks)
         binding.mvRvLiked.apply {
             layoutManager = GridLayoutManager(activity, 2)
-            this.adapter = adapter
+            this.adapter = mAdapter
+        }
+
+        lifecycleScope.launch {
+            viewModel.bookmarks.collect {
+                Log.e("URGENT_TAG", "MyVideoFragment: onViewCreated: called")
+                mAdapter.updateItems(it)
+            }
         }
 
 //        binding.mvRvLiked.addItemDecoration(
@@ -41,6 +62,13 @@ class MyVideoFragment : Fragment() {
 //        binding.mvRvLiked.addItemDecoration(
 //            GridSpacingItemDecoration(2, 1f.fromDpToPx(), true)
 //        )
+    }
+
+    private fun showDetailFragment(videoId: String) {
+        requireActivity().supportFragmentManager.beginTransaction()
+            .replace(R.id.fl, VideoDetailFragment.newInstance(videoId))
+            .addToBackStack(null)
+            .commit()
     }
 
 //    internal class GridSpacingItemDecoration(

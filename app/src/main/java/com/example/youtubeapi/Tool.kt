@@ -2,6 +2,10 @@ package com.example.youtubeapi
 
 import android.provider.MediaStore
 import com.example.youtubeapi.data.model.dto.HomeVideo
+import android.util.Log
+import com.example.youtubeapi.data.model.dto.SearchVideo
+import com.example.youtubeapi.data.model.dto.VideoById
+import com.example.youtubeapi.presentation.uistate.VideoState
 
 
 /**
@@ -14,4 +18,24 @@ fun extractChannelIdStringFromVideos(videos: List<HomeVideo>): String {
         channelIdSet.add(homeVideo.snippet.channelId)
     }
     return channelIdSet.joinToString(",")
+}
+
+fun String.escapeTag(): String {
+    val mapper = listOf(
+        Pair("&nbsp;", " "),
+        Pair("&lt;", "<"),
+        Pair("&gt;", ">"),
+        Pair("&amp;", "&"),
+        Pair("&quot;", "\""),
+        Pair("&#035;", "#"),
+        Pair("&#039;", "'"),
+
+        )
+    val title = this
+    mapper.forEach {
+        title.replace(it.first, it.second)
+        Log.d("replace", title)
+    }
+
+    return title
 }
