@@ -10,22 +10,22 @@ import com.example.youtubeapi.databinding.ActivityMainBinding
 import com.example.youtubeapi.presentation.adapter.ViewPagerAdapter
 import com.example.youtubeapi.presentation.fragment.VideoDetailFragment
 import com.google.android.material.tabs.TabLayoutMediator
+import java.time.Duration
 
 class MainActivity : AppCompatActivity() {
 
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
         initView()
-
     }
 
     private fun initView() {
         with(binding) {
+            vp.isUserInputEnabled = false
             vp.adapter = ViewPagerAdapter(this@MainActivity)
             TabLayoutMediator(tl, vp) { tab, position ->
                 when (position) {
@@ -45,4 +45,9 @@ class MainActivity : AppCompatActivity() {
             }.attach()
         }
     }
+}
+
+fun main() {
+    val regex = "PT(?<H>[0-9]*)H{0,1}(?<M>[0-9]*)M{0,1}(?<S>[0-9]*)S{0,1}".toRegex()
+
 }

@@ -33,7 +33,6 @@ class HomeFragment : Fragment(), VideoClickListener, ChannelClickListener {
 
     private val binding by lazy { FragmentHomeBinding.inflate(layoutInflater) }
     private val db by lazy { AppDatabase.getInstance(requireContext())!! }
-
     private val viewModel: MainViewModel by activityViewModels {
         MainViewModelFactory(db.videoDao())
     }
@@ -117,15 +116,15 @@ class HomeFragment : Fragment(), VideoClickListener, ChannelClickListener {
     }
 
     override fun onVideoClick(videoState: VideoState) {
-
+        showDetailFragment(videoState.id)
     }
     override fun onChannelClick(channel: Channel) {
 
     }
-//    private fun showDetailFragment(videoId: String) {
-//        requireActivity().supportFragmentManager.beginTransaction()
-//            .replace(R.id.fl, VideoDetailFragment())
-//            .addToBackStack(null)
-//            .commit()
-//    }
+    private fun showDetailFragment(videoId: String) {
+        requireActivity().supportFragmentManager.beginTransaction()
+            .replace(R.id.fl, VideoDetailFragment.newInstance(videoId))
+            .addToBackStack(null)
+            .commit()
+    }
 }

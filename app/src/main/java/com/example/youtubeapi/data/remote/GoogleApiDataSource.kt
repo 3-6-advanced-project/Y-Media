@@ -7,7 +7,6 @@ import com.example.youtubeapi.data.model.dto.HomeVideo
 import com.example.youtubeapi.data.model.dto.SearchVideo
 import com.example.youtubeapi.data.model.dto.VideoCategoryResponse
 import com.example.youtubeapi.data.model.dto.VideoById
-import com.example.youtubeapi.data.model.dto.VideoResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 
