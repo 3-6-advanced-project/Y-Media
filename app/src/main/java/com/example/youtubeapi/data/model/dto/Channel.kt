@@ -27,8 +27,8 @@ data class ChannelInfo(
     val statistics: ChannelStatistics
 )
 
-//ChannelInfo.snippet.thumbnails.default.url: String
-//ChannelInfo.statistics.subscriberCount: Long
+//ChannelInfo.snippet.thumbnails.default
+//ChannelInfo.statistics.subscriberCount
 
 /* [getByChannelId에 대한 주석] - 내가 헷갈려서 기록함. GoogleApiDataSource.kt 에도 같은 내용 주석 있음.
 https://developers.google.com/youtube/v3/docs/channels#properties 에서 각 항목 타입 및 용례를 알아볼 수 있다.
