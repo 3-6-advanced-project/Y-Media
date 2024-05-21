@@ -83,7 +83,7 @@ interface GoogleApiDataSource {
     @GET("youtube/v3/channels")
     suspend fun getByChannelId(
         @Query("key") key: String = BuildConfig.GOOGLE_API_KEY,
-        @Query("id") channelId: String, //channel ID
+        @Query("id") id: String, //channel ID
         @Query("part") part: String = "snippet, statistics"
     )
 }
