@@ -15,23 +15,23 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import androidx.lifecycle.viewModelScope
 import com.example.youtubeapi.data.local.dao.VideoEntityDao
 import com.example.youtubeapi.data.model.entity.VideoEntity
-import kotlinx.coroutines.launch
 import androidx.lifecycle.viewmodel.CreationExtras
-import com.example.youtubeapi.presentation.uistate.asVideoState
+import com.example.youtubeapi.data.model.dto.ChannelInfo
+import com.example.youtubeapi.presentation.uistate.ChannelState
+import com.example.youtubeapi.presentation.uistate.asChannelState
 
 // Represents different states for the LatestNews screen
 sealed interface LatestNewsUiState {
     data class Success(val videoStates: List<VideoState>) : LatestNewsUiState
+    data class ChannelSuccess(val channelStates: ChannelState) : LatestNewsUiState
     data class Error(val exception: Throwable) : LatestNewsUiState
 }
 
 class MainViewModel(
     private val videoEntityDao: VideoEntityDao,
-    private val videoRepository: VideoRepository,
-    private val videoChannel: Channel
+    private val videoRepository: VideoRepository
 ): ViewModel() {
 
     private val _mostPopularVideos = MutableStateFlow(listOf<VideoState>())
@@ -55,6 +55,9 @@ class MainViewModel(
     //디테일 페이지로 이동 시 Search 결과 연결 + 0번으로만 이동해서 분리.
     private val _uiDetailState: MutableStateFlow<LatestNewsUiState> = MutableStateFlow(LatestNewsUiState.Success(emptyList()))
     val uiDetailState = _uiDetailState.asStateFlow()
+
+    private val _channelInfo = MutableStateFlow(listOf<ChannelInfo>())
+    private val channelInfo = _channelInfo.asStateFlow()
 
     private val _bookmarks = MutableStateFlow(listOf<VideoEntity>())
     val bookmarks = _bookmarks.asStateFlow()
@@ -142,13 +145,12 @@ class MainViewModel(
         }
     }
 
-    fun onDetailChannels(channelId: String) = viewModelScope.launch{
+    fun onDetailChannel(channelId: String) = viewModelScope.launch{
         runCatching {
-            val channel = videoRepository.getChannelById(channelId = channelId)
-            val channelState = channel.items.map {it.asChannelState()}
-            _uiDetailState.value = LatestNewsUiState.Success(channelState)
-            Log.d("Api Call Success", channelState.toString())
-        }.onFailure { 
+            val channel = videoRepository.getByChannelId(channelId = channelId) //출력결과 타입 ChannelInfo
+            _uiDetailState.value = LatestNewsUiState.ChannelSuccess(channel.asChannelState())
+            Log.d("Api Call Channel Success", channel.toString())
+        }.onFailure {
             _uiDetailState.value = LatestNewsUiState.Error(it)
             Log.e("Api Call Error", it.message.toString())
         }
