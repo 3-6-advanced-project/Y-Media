@@ -24,25 +24,34 @@ import kotlinx.coroutines.launch
 
 class MyVideoFragment : Fragment() {
 
-    private val binding by lazy { FragmentMyVideoBinding.inflate(layoutInflater) }
+    // private val binding by lazy { FragmentMyVideoBinding.inflate(layoutInflater) }
+
+    private var _binding: FragmentMyVideoBinding? = null
+    private val binding get() = _binding!!
+
     private val db by lazy { AppDatabase.getInstance(requireContext())!! }
     private val viewModel: MainViewModel by activityViewModels {
         MainViewModelFactory(db.videoDao())
     }
 
-    private val mAdapter by lazy {
-        MyVideoAdapter { videoId ->
-            showDetailFragment(videoId)
-        }
-    }
+
+    private var _mAdapter: MyVideoAdapter? = null
+    private val mAdapter get() = _mAdapter!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ) = binding.root
+    ): View {
+        _binding = FragmentMyVideoBinding.inflate(inflater)
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        _mAdapter = MyVideoAdapter { videoId ->
+            showDetailFragment(videoId)
+        }
 
         binding.mvRvLiked.apply {
             layoutManager = GridLayoutManager(activity, 2)
@@ -54,23 +63,21 @@ class MyVideoFragment : Fragment() {
             )
         }
 
-        lifecycleScope.launch {
+        viewLifecycleOwner.lifecycleScope.launch {
             viewModel.bookmarks.collect {
                 Log.e("URGENT_TAG", "MyVideoFragment: onViewCreated: called")
                 mAdapter.updateItems(it)
             }
         }
-
-//        binding.mvRvLiked.addItemDecoration(
-//            ListItemDecoration(resources.displayMetrics.density).apply {
-//                setPaddingValues(startDp = 5, bottomDp = 10)
-//            }
-//        )
-
-//        binding.mvRvLiked.addItemDecoration(
-//            GridSpacingItemDecoration(2, 1f.fromDpToPx(), true)
-//        )
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+        _mAdapter = null
+    }
+
+
 
     private fun showDetailFragment(videoId: String) {
         requireActivity().supportFragmentManager.beginTransaction()
