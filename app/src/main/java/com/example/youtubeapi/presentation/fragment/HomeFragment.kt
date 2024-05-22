@@ -73,7 +73,7 @@ class HomeFragment : Fragment(), VideoClickListener, ChannelClickListener {
             rvMostPopularVideo.adapter = mostPopularVideoAdapter
             rvCategoryVideo.adapter = categoryVideoAdapter
             rvCategoryChannel.adapter = categoryChannelAdapter
-            ivMenuButton.setOnClickListener(menuButtonOnClickListener)
+            llCategoryLayout.setOnClickListener(menuButtonOnClickListener)
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
@@ -86,7 +86,6 @@ class HomeFragment : Fragment(), VideoClickListener, ChannelClickListener {
             viewModel.mostPopularVideoWithCategory.collect {
                 categoryVideoAdapter.itemsUpdate(it)
                 binding.rvCategoryVideo.scrollToPosition(0)
-
             }
         }
 

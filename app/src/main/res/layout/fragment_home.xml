@@ -59,6 +59,42 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/v_first_divider"/>
 
+    <LinearLayout
+        android:id="@+id/ll_category_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toEndOf="@id/tv_category_video_indic"
+        app:layout_constraintTop_toTopOf="@id/tv_category_video_indic"
+        app:layout_constraintBottom_toBottomOf="@id/tv_category_video_indic">
+
+        <TextView
+            android:id="@+id/tv_current_category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/default_horizontal_margin12"
+            android:text=""
+            android:textColor="@color/grey"
+            android:textSize="12sp"
+            android:layout_gravity="center"
+            app:layout_constraintStart_toEndOf="@+id/tv_category_video_indic"
+            app:layout_constraintTop_toTopOf="@id/tv_category_video_indic"
+            app:layout_constraintBottom_toBottomOf="@id/tv_category_video_indic"/>
+
+        <ImageView
+            android:id="@+id/iv_menu_button"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:padding="@dimen/default_horizontal_margin8"
+            android:src="@drawable/ic_down_arrow"
+            android:layout_marginStart="@dimen/default_horizontal_margin8"
+            android:layout_gravity="center"
+            app:layout_constraintStart_toEndOf="@+id/tv_current_category"
+            app:layout_constraintTop_toTopOf="@id/tv_current_category"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_current_category"/>
+
+    </LinearLayout>
+    <!--
     <TextView
         android:id="@+id/tv_current_category"
         android:layout_width="wrap_content"
@@ -81,7 +117,7 @@
         app:layout_constraintStart_toEndOf="@+id/tv_current_category"
         app:layout_constraintTop_toTopOf="@id/tv_current_category"
         app:layout_constraintBottom_toBottomOf="@+id/tv_current_category"/>
-
+    -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_category_video"
         android:layout_width="match_parent"
