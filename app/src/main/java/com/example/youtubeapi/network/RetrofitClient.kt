@@ -2,7 +2,6 @@ package com.example.youtubeapi.network
 
 import com.example.youtubeapi.GOOGLE_API_URL_BASE
 import com.example.youtubeapi.GOOGLE_API_URL_DEVELOP
-import com.example.youtubeapi.data.remote.DeveloperDataSource
 import com.example.youtubeapi.data.remote.GoogleApiDataSource
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -34,20 +33,8 @@ object RetrofitClient {
             .build()
     }
 
-    private val retrofitDeveloperApi by lazy {
-        Retrofit.Builder()
-            .baseUrl(GOOGLE_API_URL_DEVELOP)
-            .client(okHttpClient)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-    }
-
     val googleApiSource: GoogleApiDataSource by lazy {
         retrofitGoogleApi.create(GoogleApiDataSource::class.java)
-    }
-
-    val developerApiSource: DeveloperDataSource by lazy {
-        retrofitDeveloperApi.create(DeveloperDataSource::class.java)
     }
 }
 
