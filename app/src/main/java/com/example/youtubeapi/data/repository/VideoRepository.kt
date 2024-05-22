@@ -1,11 +1,9 @@
 package com.example.youtubeapi.data.repository
 
 import androidx.annotation.IntRange
-import com.example.youtubeapi.data.remote.DeveloperDataSource
 import com.example.youtubeapi.data.remote.GoogleApiDataSource
 
 class VideoRepository(
-    private val developerDataSource: DeveloperDataSource,
     private val googleApiDataSource: GoogleApiDataSource,
 ) {
     suspend fun getMostPopularVideo(

@@ -16,9 +16,11 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.youtubeapi.R
+import com.example.youtubeapi.adapter.SearchListAdapter
 import com.example.youtubeapi.data.local.AppDatabase
 import com.example.youtubeapi.data.model.dto.Channel
 import com.example.youtubeapi.databinding.FragmentHomeBinding
+import com.example.youtubeapi.databinding.FragmentSearchBinding
 import com.example.youtubeapi.presentation.adapter.ChannelClickListener
 import com.example.youtubeapi.presentation.adapter.HomeChannelRecyclerViewAdapter
 import com.example.youtubeapi.presentation.adapter.HomeVideoRecyclerViewAdapter
@@ -31,23 +33,38 @@ import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment(), VideoClickListener, ChannelClickListener {
 
-    private val binding by lazy { FragmentHomeBinding.inflate(layoutInflater) }
+
+    private var _binding: FragmentHomeBinding? = null
+    private val binding get() = _binding!!
+
+    private var _mostPopularVideoAdapter: HomeVideoRecyclerViewAdapter? = null
+    private val mostPopularVideoAdapter get() = _mostPopularVideoAdapter!!
+
+    private var _categoryVideoAdapter: HomeVideoRecyclerViewAdapter? = null
+    private val categoryVideoAdapter get() = _categoryVideoAdapter!!
+
+    private var _categoryChannelAdapter: HomeChannelRecyclerViewAdapter? = null
+    private val categoryChannelAdapter get() = _categoryChannelAdapter!!
+
     private val db by lazy { AppDatabase.getInstance(requireContext())!! }
     private val viewModel: MainViewModel by activityViewModels {
         MainViewModelFactory(db.videoDao())
     }
 
-    private val mostPopularVideoAdapter by lazy { HomeVideoRecyclerViewAdapter(this) }
-    private val categoryVideoAdapter by lazy { HomeVideoRecyclerViewAdapter(this) }
-    private val categoryChannelAdapter by lazy { HomeChannelRecyclerViewAdapter(this) }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ) = binding.root
+    ): View {
+        _binding = FragmentHomeBinding.inflate(inflater)
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        _mostPopularVideoAdapter = HomeVideoRecyclerViewAdapter(this)
+        _categoryVideoAdapter = HomeVideoRecyclerViewAdapter(this)
+        _categoryChannelAdapter = HomeChannelRecyclerViewAdapter(this)
 
         with(binding) {
             recyclerViewInit(rvMostPopularVideo)
@@ -56,34 +73,44 @@ class HomeFragment : Fragment(), VideoClickListener, ChannelClickListener {
             rvMostPopularVideo.adapter = mostPopularVideoAdapter
             rvCategoryVideo.adapter = categoryVideoAdapter
             rvCategoryChannel.adapter = categoryChannelAdapter
-            ivMenuButton.setOnClickListener(menuButtonOnClickListener)
+            llCategoryLayout.setOnClickListener(menuButtonOnClickListener)
         }
 
-        lifecycleScope.launch {
+        viewLifecycleOwner.lifecycleScope.launch {
             viewModel.mostPopularVideos.collect {
                 mostPopularVideoAdapter.itemsUpdate(it)
             }
         }
 
-        lifecycleScope.launch {
+        viewLifecycleOwner.lifecycleScope.launch {
             viewModel.mostPopularVideoWithCategory.collect {
                 categoryVideoAdapter.itemsUpdate(it)
+                binding.rvCategoryVideo.scrollToPosition(0)
             }
         }
 
-        lifecycleScope.launch {
+        viewLifecycleOwner.lifecycleScope.launch {
             viewModel.channels.collect {
                 categoryChannelAdapter.itemsUpdate(it)
+                binding.rvCategoryChannel.scrollToPosition(0)
             }
         }
 
-        lifecycleScope.launch {
+        viewLifecycleOwner.lifecycleScope.launch {
             viewModel.currentCategory.collect {
                 it?.let { nonNull ->
                     binding.tvCurrentCategory.text = nonNull.snippet.title
                 }
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+        _mostPopularVideoAdapter = null
+        _categoryVideoAdapter = null
+        _categoryChannelAdapter = null
     }
 
     private fun recyclerViewInit(recyclerView: RecyclerView) {

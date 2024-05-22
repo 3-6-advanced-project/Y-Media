@@ -1,10 +1,7 @@
 package com.example.youtubeapi
 
-import android.util.Log
+import androidx.core.text.HtmlCompat
 import com.example.youtubeapi.data.model.dto.HomeVideo
-import com.example.youtubeapi.data.model.dto.SearchVideo
-import com.example.youtubeapi.data.model.dto.VideoById
-import com.example.youtubeapi.presentation.uistate.VideoState
 
 
 /**
@@ -20,21 +17,23 @@ fun extractChannelIdStringFromVideos(videos: List<HomeVideo>): String {
 }
 
 fun String.escapeTag(): String {
-    val mapper = listOf(
-        Pair("&nbsp;", " "),
-        Pair("&lt;", "<"),
-        Pair("&gt;", ">"),
-        Pair("&amp;", "&"),
-        Pair("&quot;", "\""),
-        Pair("&#035;", "#"),
-        Pair("&#039;", "'"),
-
-        )
-    val title = this
-    mapper.forEach {
-        title.replace(it.first, it.second)
-        Log.d("replace", title)
-    }
-
-    return title
+    return HtmlCompat.fromHtml(this, HtmlCompat.FROM_HTML_MODE_LEGACY).toString()
 }
+
+fun isoDateToKor(isoDate: String): String {
+    val regex = Regex("(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2})Z")
+    val matchResult = regex.find(isoDate)
+
+    if (matchResult != null) {
+        val (year, month, day, hour, minute) = matchResult.destructured
+
+        val hourInt = hour.toInt()
+        val period = if (hourInt >= 12) "PM" else "AM"
+        val hour12 = if (hourInt > 12) hourInt - 12 else if (hourInt == 0) 12 else hourInt
+
+        val formattedDate = "게시일: ${year}년 ${month}월 ${day}일 ${hour12}:${minute}${period}"
+        return formattedDate
+    } else
+    { return "" }
+}
+

@@ -29,7 +29,7 @@ class MyVideoAdapter(
         holder.thumbnail.setOnClickListener {
             itemClickListener(dataSet.videoId)
         }
-        holder.duration.text = dataSet.duration
+        // holder.duration.text = dataSet.duration
         holder.title.text = dataSet.title
         holder.channel.text = dataSet.channelTitle
     }
@@ -42,7 +42,7 @@ class MyVideoAdapter(
         return myVideo.size
     }
 
-    //@SuppressLint("NotifyDataSetChanged")
+    @SuppressLint("NotifyDataSetChanged")
     fun updateItems(items: List<VideoEntity>) {
         myVideo.clear()
         myVideo.addAll(items)
@@ -54,7 +54,7 @@ class MyVideoAdapter(
         val binding: ItemsGridBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         val thumbnail = binding.mvRvThumbnail
-        val duration = binding.mvRvDuration
+        // val duration = binding.mvRvDuration
         val title = binding.mvRvTitle
         val channel = binding.mvRvChannel
     }

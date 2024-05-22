@@ -12,7 +12,9 @@ import androidx.lifecycle.lifecycleScope
 import coil.load
 import com.example.youtubeapi.R
 import com.example.youtubeapi.data.local.AppDatabase
+import com.example.youtubeapi.databinding.FragmentSearchBinding
 import com.example.youtubeapi.databinding.FragmentVideoDetailBinding
+import com.example.youtubeapi.isoDateToKor
 import com.example.youtubeapi.presentation.uistate.VideoState
 import com.example.youtubeapi.viewmodel.LatestNewsUiState
 import com.example.youtubeapi.viewmodel.MainViewModel
@@ -24,15 +26,16 @@ import kotlinx.coroutines.withContext
 private const val ARG_PARAM1 = "param1"
 
 class VideoDetailFragment : Fragment() {
+
     private var videoId: String? = null
-
     private var currentVideoState: VideoState? = null
-
-    private val binding by lazy { FragmentVideoDetailBinding.inflate(layoutInflater) }
     private val db by lazy { AppDatabase.getInstance(requireContext())!! }
     private val viewModel: MainViewModel by activityViewModels { //뷰모델 초기화 시 입력값 설정이 없어서 생긴 문제.
         MainViewModelFactory(db.videoDao())
     }
+
+    private var _binding: FragmentVideoDetailBinding? = null
+    private val binding get() = _binding!!
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -42,14 +45,18 @@ class VideoDetailFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ) = binding.root
-
+    ): View {
+        _binding = FragmentVideoDetailBinding.inflate(inflater)
+        return binding.root
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViewModel() //데이터 바뀔때 자동 호출됨. coroutine
 
+
+
         binding.ivBackButton.setOnClickListener{
-            binding.cl.visibility = android.view.View.GONE
+            requireActivity().supportFragmentManager.beginTransaction().remove(this).commit()
         }
 
         val videoId = videoId.toString() //나중에는 다른 fragment에서 보낸 정보를 여기 연결.
@@ -69,6 +76,11 @@ class VideoDetailFragment : Fragment() {
 
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
 
     companion object {
         @JvmStatic
@@ -82,22 +94,11 @@ class VideoDetailFragment : Fragment() {
     }
 
 
-    private fun initViewModel() = lifecycleScope.launch { //변화 감지 갱신
+    private fun initViewModel() = viewLifecycleOwner.lifecycleScope.launch { //변화 감지 갱신
         viewModel.uiDetailState.collect { uiDetailState ->
             when (uiDetailState) {
                 is LatestNewsUiState.Success -> {
                     val videoStates = uiDetailState.videoStates //thumbnail
-//                    if(videoStates.isNotEmpty()) { //viewModel 완전 초기값... 비어있어 인덱스 오류?
-//                        binding.ivThumbnail.load(videoStates[0].thumbnail.url){ //glide나 [coil]로 웹 이미지 로드
-//                            placeholder(R.drawable.img_thumbnail_test) //적용 전. 회색 이미지로 교체!
-//                        }
-//                        Log.d("videoStates", videoStates.size.toString())
-//                        binding.tvTitle.text = videoStates[0].title
-//                        binding.tvChannel.text = videoStates[0].channelTitle
-//                        binding.ivChannelProfile.load(videoStates[0].thumbnail.url) //우선 섬네일 넣어뒀는데 채널 사진으로 바꾸어야 됨. 갖고 올 수 있는 건가???
-//                        binding.tvSubscribers.text = videoStates[0].channelTitle // 채널 구독자 수 확인하려면 채널 API 사용해야 함.
-//                        binding.tvDescription.text = videoStates[0].description
-//                    }
 
                     if(videoStates.isNotEmpty()) {
                         currentVideoState = uiDetailState.videoStates[0]
@@ -123,7 +124,7 @@ class VideoDetailFragment : Fragment() {
     private fun initRVItem() = with(binding) {
     }
 
-    private fun checkVideoIcon(videoId: String) = lifecycleScope.launch() {
+    private fun checkVideoIcon(videoId: String) = viewLifecycleOwner.lifecycleScope.launch() {
         withContext(Dispatchers.IO) {
             val like = binding.ivLikesButton
             if (db.videoDao().isThisVideoExists(videoId)) {
@@ -131,21 +132,12 @@ class VideoDetailFragment : Fragment() {
             }
         }
     }
-    private fun savedLikes(videoId: String) = lifecycleScope.launch() { //https://velog.io/@jeongminji4490/Error-cannot-access-database-on-main-thread-LifecycleScope
+    private fun savedLikes(videoId: String) = viewLifecycleOwner.lifecycleScope.launch() { //https://velog.io/@jeongminji4490/Error-cannot-access-database-on-main-thread-LifecycleScope
         withContext(Dispatchers.IO){
             val like = binding.ivLikesButton
 
             if (!db.videoDao().isThisVideoExists(videoId)) { //db에 해당  videoId를 가진 영상이 없는 경우. 추가.
                 like.setImageResource(R.drawable.ic_likes)
-//                db.videoDao().insertVideoEntityWithParameters(
-//                    videoId = videoId,
-//                    title = binding.tvTitle.text.toString(),
-//                    description = binding.tvDescription.text.toString(),
-//                    channelTitle =  binding.tvChannel.text.toString(),
-//                    channelId = "",
-//                    publishedAt = "",
-//                    duration = "",
-//                    thumbnailUrl = "")
 
                 currentVideoState?.let {
                     db.videoDao().insertVideoEntityWithParameters(
@@ -170,19 +162,4 @@ class VideoDetailFragment : Fragment() {
 
 
 }
-private fun isoDateToKor(isoDate: String): String {
-    val regex = Regex("(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2})Z")
-    val matchResult = regex.find(isoDate)
 
-    if (matchResult != null) {
-        val (year, month, day, hour, minute) = matchResult.destructured
-
-        val hourInt = hour.toInt()
-        val period = if (hourInt >= 12) "PM" else "AM"
-        val hour12 = if (hourInt > 12) hourInt - 12 else if (hourInt == 0) 12 else hourInt
-
-        val formattedDate = "게시일: ${year}년 ${month}월 ${day}일 ${hour12}:${minute}${period}"
-        return formattedDate
-    } else
-    { return "" }
-}

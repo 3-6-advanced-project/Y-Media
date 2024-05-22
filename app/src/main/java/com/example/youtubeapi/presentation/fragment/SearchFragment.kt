@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.youtubeapi.R
 import com.example.youtubeapi.adapter.SearchListAdapter
 import com.example.youtubeapi.data.local.AppDatabase
+import com.example.youtubeapi.databinding.FragmentMyVideoBinding
 import com.example.youtubeapi.databinding.FragmentSearchBinding
 import com.example.youtubeapi.presentation.adapter.SearchFilterAdapter
 import com.example.youtubeapi.presentation.adapter.decoration.ListItemDecoration
@@ -25,7 +26,15 @@ import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
 
 class SearchFragment : Fragment() {
-    private val binding by lazy { FragmentSearchBinding.inflate(layoutInflater) }
+
+    private var _binding: FragmentSearchBinding? = null
+    private val binding get() = _binding!!
+
+    private var _searchListAdapter: SearchListAdapter? = null
+    private val searchListAdapter get() = _searchListAdapter!!
+
+    private var _searchFilterAdapter: SearchFilterAdapter? = null
+    private val searchFilterAdapter get() = _searchFilterAdapter!!
 
     private val db by lazy { AppDatabase.getInstance(requireContext())!! }
 
@@ -33,35 +42,37 @@ class SearchFragment : Fragment() {
         MainViewModelFactory(db.videoDao())
     }
 
-    // TODO : 이후 VideoDetailFragment()의 companion object{}에서 parameter를 받도록 수정되면 videoId값 넘겨줘야함
-    private val searchListAdapter: SearchListAdapter by lazy {
-        SearchListAdapter() { videoId ->
-            showDetailFragment(videoId)
-        }
-    }
-
-    private val searchFilterAdapter: SearchFilterAdapter by lazy {
-        SearchFilterAdapter(
-            listOf("Any", "Less than 4 minutes", "4 to 20 minutes", "more than 20 minutes")
-        )
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        loadData() // 데이터 가져오기
-
+        _binding = FragmentSearchBinding.inflate(inflater)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        _searchListAdapter = SearchListAdapter { videoId ->
+            showDetailFragment(videoId)
+        }
+
+        _searchFilterAdapter = SearchFilterAdapter(
+            listOf("Any", "Less than 4 minutes", "4 to 20 minutes", "more than 20 minutes")
+        )
+
+        loadData() // 데이터 가져오기
         initEditTextDoneActionListener()
         initFilterItems()
         initVideoItems()
         initViewModel()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+        _searchListAdapter = null
+        _searchFilterAdapter = null
     }
 
     // 데이터 가져오기
@@ -105,7 +116,7 @@ class SearchFragment : Fragment() {
             val imm = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(requireActivity().window.decorView.applicationWindowToken, 0)
 
-            val filterTypes = listOf("any", "short", "medium", "short")
+            val filterTypes = listOf("any", "short", "medium", "long")
             viewModel.onSearch(
                 query = etSearchKeyword.text.toString(),
                 videoDuration = filterTypes[searchFilterAdapter.currentSelectPosition]
@@ -140,7 +151,7 @@ class SearchFragment : Fragment() {
     }
 
 
-    private fun initViewModel() = lifecycleScope.launch {
+    private fun initViewModel() = viewLifecycleOwner.lifecycleScope.launch {
         viewModel.uiState.collect { uiState ->
             when (uiState) {
                 is LatestNewsUiState.Success -> {

@@ -148,7 +148,6 @@ class MainViewModelFactory(
 ) : ViewModelProvider.Factory {
 
     private val repository = VideoRepository(
-        RetrofitClient.developerApiSource,
         RetrofitClient.googleApiSource
     )
 

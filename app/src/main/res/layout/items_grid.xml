@@ -1,33 +1,20 @@
-<LinearLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:layout_marginHorizontal="20dp"
     android:layout_gravity="center">
 
-    <FrameLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+    <ImageView
+        android:id="@+id/mv_rv_thumbnail"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintDimensionRatio="1.8f"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
-        <ImageView
-            android:id="@+id/mv_rv_thumbnail"
-            android:layout_width="180dp"
-            android:layout_height="100dp"
-            android:scaleType="fitXY"
-            android:background="#747474"/>
-
-        <TextView
-            android:id="@+id/mv_rv_duration"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|right"
-            android:padding="5dp"
-            android:background="#000000"
-            android:text="00:00"
-            android:textColor="@color/white"/>
-
-    </FrameLayout>
 
     <TextView
         android:id="@+id/mv_rv_title"
@@ -36,9 +23,12 @@
         android:padding="5dp"
         android:textColor="@color/white"
         android:text="Build it in Figma: Create a Design System ― Fo..."
-        android:maxLines="2"
+        android:maxLines="1"
         android:ellipsize="end"
-        android:textSize="15dp"/>
+        android:textSize="15dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mv_rv_thumbnail"/>
 
     <TextView
         android:id="@+id/mv_rv_channel"
@@ -50,6 +40,9 @@
         android:layout_marginRight="5dp"
         android:layout_marginBottom="20dp"
         android:maxLines="1"
-        android:text="Figma" />
+        android:text="Figma"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/mv_rv_title"/>
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
