@@ -68,12 +68,15 @@ class HomeFragment : Fragment(), VideoClickListener, ChannelClickListener {
         lifecycleScope.launch {
             viewModel.mostPopularVideoWithCategory.collect {
                 categoryVideoAdapter.itemsUpdate(it)
+                binding.rvCategoryVideo.scrollToPosition(0)
+
             }
         }
 
         lifecycleScope.launch {
             viewModel.channels.collect {
                 categoryChannelAdapter.itemsUpdate(it)
+                binding.rvCategoryChannel.scrollToPosition(0)
             }
         }
 
