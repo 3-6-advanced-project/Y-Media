@@ -56,7 +56,7 @@ class VideoDetailFragment : Fragment() {
 
 
         binding.ivBackButton.setOnClickListener{
-            binding.cl.visibility = android.view.View.GONE
+            requireActivity().supportFragmentManager.beginTransaction().remove(this).commit()
         }
 
         val videoId = videoId.toString() //나중에는 다른 fragment에서 보낸 정보를 여기 연결.
