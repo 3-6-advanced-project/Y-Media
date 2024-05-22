@@ -108,9 +108,8 @@ class VideoDetailFragment : Fragment() {
                                 }
                                 tvTitle.text = videoStates[0].title
                                 tvChannel.text = videoStates[0].channelTitle
-                                ivChannelProfile.load(videoStates[0].thumbnail.url) //우선 섬네일 넣어뒀는데 채널 사진으로 바꾸어야 됨. 갖고 올 수 있는 건가???
-                                tvSubscribers.text =
-                                    videoStates[0].channelTitle // 채널 구독자 수 확인하려면 채널 API 사용해야 함.
+//                                ivChannelProfile.load(videoStates[0].thumbnail.url) //우선 섬네일 넣어뒀는데 채널 사진으로 바꾸어야 됨. 갖고 올 수 있는 건가???
+                                tvSubscribers.text = isoDateToKor(videoStates[0].publishedAt) // 채널 구독자 수 확인하려면 채널 API 사용해야 함.
                                 tvDescription.text = videoStates[0].description
                             }
                         }
@@ -171,4 +170,19 @@ class VideoDetailFragment : Fragment() {
 
 
 }
+private fun isoDateToKor(isoDate: String): String {
+    val regex = Regex("(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2})Z")
+    val matchResult = regex.find(isoDate)
 
+    if (matchResult != null) {
+        val (year, month, day, hour, minute) = matchResult.destructured
+
+        val hourInt = hour.toInt()
+        val period = if (hourInt >= 12) "PM" else "AM"
+        val hour12 = if (hourInt > 12) hourInt - 12 else if (hourInt == 0) 12 else hourInt
+
+        val formattedDate = "게시일: ${year}년 ${month}월 ${day}일 ${hour12}:${minute}${period}"
+        return formattedDate
+    } else
+    { return "" }
+}
