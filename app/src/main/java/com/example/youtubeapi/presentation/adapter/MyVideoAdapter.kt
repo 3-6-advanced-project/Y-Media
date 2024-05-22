@@ -42,7 +42,7 @@ class MyVideoAdapter(
         return myVideo.size
     }
 
-    //@SuppressLint("NotifyDataSetChanged")
+    @SuppressLint("NotifyDataSetChanged")
     fun updateItems(items: List<VideoEntity>) {
         myVideo.clear()
         myVideo.addAll(items)

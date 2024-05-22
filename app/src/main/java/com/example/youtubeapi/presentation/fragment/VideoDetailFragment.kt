@@ -87,17 +87,6 @@ class VideoDetailFragment : Fragment() {
             when (uiDetailState) {
                 is LatestNewsUiState.Success -> {
                     val videoStates = uiDetailState.videoStates //thumbnail
-//                    if(videoStates.isNotEmpty()) { //viewModel 완전 초기값... 비어있어 인덱스 오류?
-//                        binding.ivThumbnail.load(videoStates[0].thumbnail.url){ //glide나 [coil]로 웹 이미지 로드
-//                            placeholder(R.drawable.img_thumbnail_test) //적용 전. 회색 이미지로 교체!
-//                        }
-//                        Log.d("videoStates", videoStates.size.toString())
-//                        binding.tvTitle.text = videoStates[0].title
-//                        binding.tvChannel.text = videoStates[0].channelTitle
-//                        binding.ivChannelProfile.load(videoStates[0].thumbnail.url) //우선 섬네일 넣어뒀는데 채널 사진으로 바꾸어야 됨. 갖고 올 수 있는 건가???
-//                        binding.tvSubscribers.text = videoStates[0].channelTitle // 채널 구독자 수 확인하려면 채널 API 사용해야 함.
-//                        binding.tvDescription.text = videoStates[0].description
-//                    }
 
                     if(videoStates.isNotEmpty()) {
                         currentVideoState = uiDetailState.videoStates[0]
@@ -108,9 +97,8 @@ class VideoDetailFragment : Fragment() {
                                 }
                                 tvTitle.text = videoStates[0].title
                                 tvChannel.text = videoStates[0].channelTitle
-                                ivChannelProfile.load(videoStates[0].thumbnail.url) //우선 섬네일 넣어뒀는데 채널 사진으로 바꾸어야 됨. 갖고 올 수 있는 건가???
-                                tvSubscribers.text =
-                                    videoStates[0].channelTitle // 채널 구독자 수 확인하려면 채널 API 사용해야 함.
+//                                ivChannelProfile.load(videoStates[0].thumbnail.url) //우선 섬네일 넣어뒀는데 채널 사진으로 바꾸어야 됨. 갖고 올 수 있는 건가???
+                                tvSubscribers.text = isoDateToKor(videoStates[0].publishedAt) // 채널 구독자 수 확인하려면 채널 API 사용해야 함.
                                 tvDescription.text = videoStates[0].description
                             }
                         }
@@ -138,15 +126,6 @@ class VideoDetailFragment : Fragment() {
 
             if (!db.videoDao().isThisVideoExists(videoId)) { //db에 해당  videoId를 가진 영상이 없는 경우. 추가.
                 like.setImageResource(R.drawable.ic_likes)
-//                db.videoDao().insertVideoEntityWithParameters(
-//                    videoId = videoId,
-//                    title = binding.tvTitle.text.toString(),
-//                    description = binding.tvDescription.text.toString(),
-//                    channelTitle =  binding.tvChannel.text.toString(),
-//                    channelId = "",
-//                    publishedAt = "",
-//                    duration = "",
-//                    thumbnailUrl = "")
 
                 currentVideoState?.let {
                     db.videoDao().insertVideoEntityWithParameters(
@@ -171,4 +150,19 @@ class VideoDetailFragment : Fragment() {
 
 
 }
+private fun isoDateToKor(isoDate: String): String {
+    val regex = Regex("(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2})Z")
+    val matchResult = regex.find(isoDate)
 
+    if (matchResult != null) {
+        val (year, month, day, hour, minute) = matchResult.destructured
+
+        val hourInt = hour.toInt()
+        val period = if (hourInt >= 12) "PM" else "AM"
+        val hour12 = if (hourInt > 12) hourInt - 12 else if (hourInt == 0) 12 else hourInt
+
+        val formattedDate = "게시일: ${year}년 ${month}월 ${day}일 ${hour12}:${minute}${period}"
+        return formattedDate
+    } else
+    { return "" }
+}
